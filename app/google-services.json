@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "646225827512",
+    "project_id": "sociallink-2bf20",
+    "storage_bucket": "sociallink-2bf20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646225827512:android:30b81bf385549f4aba464d",
+        "android_client_info": {
+          "package_name": "com.wilren.sociallink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "646225827512-vekeq41p6v97fcqv6b3svst3af9921tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJcTlvQNDi_zgNT6rLJ5IeG2YNrrc2eQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646225827512-vekeq41p6v97fcqv6b3svst3af9921tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
