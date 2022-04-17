@@ -28,7 +28,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MessengeHolder
 
     @Override
     public void onBindViewHolder(@NonNull AdapterChat.MessengeHolder holder, int position) {
-        holder.textTv.setText((CharSequence) listMessenges.get(position).getTime());
+        holder.timeTv.setText(listMessenges.get(position).getTime());
         holder.textTv.setText(listMessenges.get(position).getText());
     }
 

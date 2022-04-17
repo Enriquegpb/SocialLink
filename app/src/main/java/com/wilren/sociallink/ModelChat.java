@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ModelChat {
     private String username,text;
-    private Date time;
+    private String time;
 
 
     public String getUsername() {
@@ -23,15 +23,15 @@ public class ModelChat {
         this.text = text;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public ModelChat(String username, String text, Date time) {
+    public ModelChat() {
         this.username = username;
         this.text = text;
         this.time = time;
