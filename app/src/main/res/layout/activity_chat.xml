@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Chat">
-
+    
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -35,9 +35,9 @@
         android:layout_marginBottom="36dp"
         android:autofillHints=""
         android:ems="10"
+        android:fontFamily="@font/droidsans"
         android:hint="@string/escribe_aqu_tu_mensaje"
         android:inputType="textPersonName"
-        android:fontFamily="@font/droidsans"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -83,11 +83,21 @@
         android:id="@+id/imageButton"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:backgroundTint="@android:color/transparent"
         android:src="@drawable/ic_send_white"
-        android:backgroundTint="@color/midarkblue"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/etMensajeChat" />
+
+    <!--<ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:backgroundTint="@color/midarkblue"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/rvChat"
+        app:layout_constraintTop_toTopOf="@+id/etMensajeChat" />-->
 
     <TextView
         android:id="@+id/userNameChat"
