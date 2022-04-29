@@ -1,7 +1,5 @@
 package com.wilren.sociallink;
 
-import java.util.Date;
-
 public class ModelChat {
     private String username,text;
     private String time;
