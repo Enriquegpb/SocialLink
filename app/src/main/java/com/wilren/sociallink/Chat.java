@@ -66,7 +66,7 @@ public class Chat extends AppCompatActivity {
                 else {
                     ModelChat mensajeUser = new ModelChat();
                     mensajeUser.setUsername("Admin");
-                    Date date=new Date();
+                    Date date = new Date();
                     mensajeUser.setTime(date.toString());
                     mensajeUser.setText(etMensaje.getText().toString());
                     FirebaseFirestore.getInstance().collection("chat").add(mensajeUser);
