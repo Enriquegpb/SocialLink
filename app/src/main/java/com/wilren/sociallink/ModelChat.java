@@ -1,7 +1,7 @@
 package com.wilren.sociallink;
 
 public class ModelChat {
-    private String username,text;
+    private String username, text;
     private String time;
 
 

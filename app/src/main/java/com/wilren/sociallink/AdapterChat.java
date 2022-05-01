@@ -22,7 +22,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MessengeHolder
     @NonNull
     @Override
     public AdapterChat.MessengeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.messagechat, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item_chat, parent, false);
         return new MessengeHolder(mView);
     }
 

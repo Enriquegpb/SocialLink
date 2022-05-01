@@ -11,14 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wilren.sociallink.Mensaje.Mensaje;
 import com.wilren.sociallink.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.MensajesViewHolder>{
-    private ArrayList <Mensaje> listaMensajes;
+public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.MensajesViewHolder> {
+    private ArrayList<Mensaje> listaMensajes;
 
-    public AdaptadorMensaje(ArrayList<Mensaje> listaMensajes){
+    public AdaptadorMensaje(ArrayList<Mensaje> listaMensajes) {
         this.listaMensajes = listaMensajes;
 
     }
@@ -42,16 +40,16 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
         return listaMensajes.size();
     }
 
-    public class MensajesViewHolder extends RecyclerView.ViewHolder{
+    public class MensajesViewHolder extends RecyclerView.ViewHolder {
         TextView nombre, ultMensaje, fecha;
-        public MensajesViewHolder(@NonNull View view){
+
+        public MensajesViewHolder(@NonNull View view) {
             super(view);
             nombre = view.findViewById(R.id.nombrePersona);
             ultMensaje = view.findViewById(R.id.ultimoMensaje);
             fecha = view.findViewById(R.id.fecha);
         }
     }
-
 
 
 }
