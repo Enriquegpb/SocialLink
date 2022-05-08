@@ -1,16 +1,33 @@
 package com.wilren.sociallink;
 
+import java.util.Date;
+
 public class ModelChat {
-    private String username, text;
-    private String time;
+    private String userid, text;
 
-
-    public String getUsername() {
-        return username;
+    public Date getTime() {
+        return time;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    private Date time;
+
+    public ModelChat(String userid, String text, Date time) {
+        this.userid = userid;
+        this.text = text;
+        this.time = time;
+    }
+
+    public ModelChat() {
+
+    }
+
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getText() {
@@ -21,17 +38,10 @@ public class ModelChat {
         this.text = text;
     }
 
-    public String getTime() {
-        return time;
-    }
 
-    public void setTime(String time) {
+
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public ModelChat() {
-        this.username = username;
-        this.text = text;
-        this.time = time;
-    }
 }
