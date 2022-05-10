@@ -4,4 +4,5 @@
     <string name="SocialLink" />
     <string name="login" />
     <string name="signup" />
+    <string name="signup2">signup</string>
 </resources>

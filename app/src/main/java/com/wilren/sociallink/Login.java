@@ -28,10 +28,10 @@ public class Login extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText(R.string.login);
+                    tab.setText("Login");
                     break;
                 case 1:
-                    tab.setText(R.string.signup);
+                    tab.setText("Signup");
                     break;
             }
         }).attach();

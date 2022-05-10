@@ -61,7 +61,7 @@
     <Button
         android:id="@+id/blogin"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="70dp"
         android:hint="Iniciar Sesión"
         android:text="@string/login"
