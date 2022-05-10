@@ -1,9 +1,13 @@
-package com.wilren.sociallink.Mensaje;
+package com.wilren.sociallink.AdaptadorMensajes;
 
 public class Mensaje {
+
     private String nombre;
     private String fecha;
     private String ultMensaje;
+    private String identificador;
+
+    //private String fotoPerfil;
 
     public Mensaje(String nombre, String fecha, String ultMensaje){
         this.nombre = nombre;
@@ -33,5 +37,13 @@ public class Mensaje {
 
     public void setUltMensaje(String ultMensaje) {
         this.ultMensaje = ultMensaje;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
     }
 }

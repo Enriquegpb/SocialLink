@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MessengeHolder> {
 
     private List<ModelChat> listMessenges;
@@ -39,7 +41,6 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MessengeHolder
 
     public class MessengeHolder extends RecyclerView.ViewHolder {
         private TextView timeTv, textTv;
-
 
         public MessengeHolder(@NonNull View itemView) {
             super(itemView);

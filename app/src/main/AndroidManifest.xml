@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wilren.sociallink">
+    package="com.wilren.sociallink" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -8,12 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SocialLink">
+        android:theme="@style/Theme.SocialLink" >
         <activity
-            android:name=".Chat"
+            android:name=".RegistroActivity"
             android:exported="true"
-            android:theme="@style/Theme.Chat"
-            >
+            android:theme="@style/Theme.Chat" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,9 +24,10 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
+            android:exported="true" >
         </activity>
+        <activity android:name=".Chat" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

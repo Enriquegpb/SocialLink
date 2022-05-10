@@ -1,4 +1,4 @@
-package com.wilren.sociallink.Adaptador;
+package com.wilren.sociallink.AdaptadorMensajes;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wilren.sociallink.Mensaje.Mensaje;
 import com.wilren.sociallink.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.MensajesViewHolder>{
     private ArrayList <Mensaje> listaMensajes;
@@ -43,12 +42,16 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
     }
 
     public class MensajesViewHolder extends RecyclerView.ViewHolder{
-        TextView nombre, ultMensaje, fecha;
+
+        private TextView nombre, ultMensaje, fecha;
+        private CircleImageView fotoPerfil;
+
         public MensajesViewHolder(@NonNull View view){
             super(view);
             nombre = view.findViewById(R.id.nombrePersona);
             ultMensaje = view.findViewById(R.id.ultimoMensaje);
             fecha = view.findViewById(R.id.fecha);
+            fotoPerfil = view.findViewById(R.id.avatar);
         }
     }
 
