@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/user"
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:layout_constraintVertical_bias="1.0" />
@@ -107,7 +107,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:text="User"
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toEndOf="@+id/userIdChat"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

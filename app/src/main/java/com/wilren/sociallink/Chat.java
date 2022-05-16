@@ -23,14 +23,14 @@ import java.util.Date;
 public class Chat extends AppCompatActivity {
 
     private RecyclerView rvMensajes;
-    LinearLayoutManager linearLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
     private TextView NameUser;
     private EditText etMensaje;
     private ImageButton btnSend, btn;
     private AdapterChatAuth AdaptadorChats;
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference chatreference = db.collection("chat");
+    private final CollectionReference chatreference = db.collection("chat");
 
     private void setComponents() {
         rvMensajes = findViewById(R.id.rvChat);
@@ -89,9 +89,39 @@ public class Chat extends AppCompatActivity {
     public void setUserDatachat() {
         NameUser = findViewById(R.id.userNameChat);
         btn = findViewById(R.id.userIdChat);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         NameUser.setText(user.getEmail());
         //btn.setImageURI();
 
     }
+
+    /*private void openGallery(){
+        Intent gallery=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, (PICK_IMAGE));
+    }
+
+    private void openCamera(){
+        File fotoFile=new File(getApplicationContext().getFilesDir(),"fotoPerfil");
+        String pathFotoFile=fotoFile.getAbsolutePath();
+        Uri fotoUri=Uri.fromFile(fotoFile);
+        Intent camera=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(camera.resolveActivity(getPackageManager()) != null){
+            camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
+            startActivityForResult(camera, (RESP_TOMAR_FOTO));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK && (requestCode==PICK_IMAGE || requestCode==RESP_TOMAR_FOTO )){
+            Uri imageUri = data.getData();
+            ImageSwitcher imgPerfil_newuser_class=null;
+            imgPerfil_newuser_class.setImageURI(imageUri);
+            ImageSwitcher imgPerfil_toolbar_class=null;
+            imgPerfil_toolbar_class.setImageURI(imageUri);
+
+
+        }
+    }*/
 }
