@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">SocialLink</string>
     <string name="escribe_aqu_tu_mensaje">Escribe aquí tu mensaje</string>
+    <string name="SocialLink" />
+    <string name="login" />
+    <string name="signup" />
+    <string name="signup2">signup</string>
 </resources>
