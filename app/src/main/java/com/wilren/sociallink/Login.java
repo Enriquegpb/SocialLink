@@ -1,6 +1,10 @@
 package com.wilren.sociallink;
 
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -12,6 +16,7 @@ public class Login extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
+    TextView logAppText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +25,10 @@ public class Login extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
+
+        logAppText = findViewById(R.id.SLtext);
+        Animation myanim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
+        logAppText.startAnimation(myanim);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
