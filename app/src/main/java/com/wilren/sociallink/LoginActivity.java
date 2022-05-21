@@ -28,24 +28,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        /*   Comentado porque no se sabe de donde salen estas variables.
         userName = findViewById(R.id.userNameLogin);
         password = findViewById(R.id.passwordLogin);
-        accionLogin = findViewById(R.id.accionLogin);
+        accionLogin = findViewById(R.id.accionLogin);*/
+
+
         auth = FirebaseAuth.getInstance();
 
         accionLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = userName.getText().toString();
-                String pass = password.getText().toString();
+                String email = "wilson@gmail.com";
+                String pass = "wilsondev";
 
                 auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-
-
-
+                            Toast.makeText(LoginActivity.this, "Has entrado", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(LoginActivity.this, "No puedes Entrar", Toast.LENGTH_SHORT).show();
                         }

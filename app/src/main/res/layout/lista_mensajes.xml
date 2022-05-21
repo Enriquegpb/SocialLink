@@ -26,6 +26,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center" />
+
             <LinearLayout
                 android:id="@+id/parteEscrita"
                 android:layout_width="wrap_content"

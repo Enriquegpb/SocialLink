@@ -19,6 +19,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.wilren.sociallink.Persona.Persona;
 
+import java.util.ArrayList;
+
 public class RegistroActivity extends AppCompatActivity {
 
     private TextView username, usermail, userpassword;
@@ -33,12 +35,10 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-
         username = findViewById(R.id.userNameRegistro);
         usermail = findViewById(R.id.userEmailRegistro);
         userpassword = findViewById(R.id.passwordRegistro);
         accionRegistro = findViewById(R.id.accionRegistro);
-
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -59,11 +59,10 @@ public class RegistroActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Persona persona = new Persona(auth.getUid(), user, email);
+
 
                             DatabaseReference mDatabase = db.getReference().child("usuarios").child(auth.getUid());
 
-                            mDatabase.setValue(persona);
 
                             Toast.makeText(RegistroActivity.this, "Se ha creado", Toast.LENGTH_SHORT).show();
                             //StorageReference storageReference = storage.getReference().child("subida").child(auth.getUid());
