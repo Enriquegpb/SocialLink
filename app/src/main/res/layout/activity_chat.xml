@@ -74,6 +74,8 @@
         android:layout_width="48dp"
         android:layout_height="0dp"
         android:src="@drawable/user"
+        android:scaleType="fitCenter"
+
         app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline10"

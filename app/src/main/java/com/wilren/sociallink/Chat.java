@@ -87,6 +87,7 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         setComponents();
+        btn = findViewById(R.id.userIdChat);
         setUserDatachat();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,9 +113,8 @@ public class Chat extends AppCompatActivity {
 
     public void setUserDatachat() {
         NameUser = findViewById(R.id.userNameChat);
-        btn = findViewById(R.id.userIdChat);
         NameUser.setText(user.getEmail());
-        //btn.setImageURI();
+
 
     }
 
