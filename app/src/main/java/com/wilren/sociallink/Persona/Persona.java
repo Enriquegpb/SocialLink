@@ -15,6 +15,7 @@ public class Persona implements Parcelable {
         this.fotoPerfil = fotoPerfil;
     }
 
+    public Persona(){}
 
     protected Persona(Parcel in) {
         id = in.readString();

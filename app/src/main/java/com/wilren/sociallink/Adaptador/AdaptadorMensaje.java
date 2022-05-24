@@ -8,14 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
 
 import java.util.ArrayList;
 
 public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.MensajesViewHolder> {
-    private ArrayList<String> listaMensajes;
+    private ArrayList<Persona> listaMensajes;
 
-    public AdaptadorMensaje(ArrayList<String> listaMensajes) {
+    public AdaptadorMensaje(ArrayList<Persona> listaMensajes) {
         this.listaMensajes = listaMensajes;
 
     }
@@ -29,7 +30,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
 
     @Override
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
-        holder.nombre.setText(listaMensajes.get(position));
+        holder.nombre.setText(listaMensajes.get(position).getNombre());
         /*holder.ultMensaje.setText(listaMensajes.get(position).getUltMensaje());
         holder.fecha.setText(listaMensajes.get(position).getFecha());*/
     }

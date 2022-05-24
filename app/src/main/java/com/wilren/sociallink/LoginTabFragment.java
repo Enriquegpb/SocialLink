@@ -71,7 +71,7 @@ public class LoginTabFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Persona persona = null;
-                        Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
 
                         //Intent logeado = new Intent(getContext(), MainActivity.class);
 
