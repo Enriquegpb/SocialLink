@@ -60,14 +60,17 @@
 
     <Button
         android:id="@+id/blogin"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="70dp"
         android:hint="Iniciar Sesión"
         android:text="@string/login"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
-        app:layout_constraintStart_toStartOf="@id/leftguide" />
+        app:layout_constraintStart_toStartOf="@id/leftguide"
+        app:layout_constraintTop_toBottomOf="@+id/til2" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftguide"
