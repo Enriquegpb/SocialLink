@@ -3,7 +3,14 @@ package com.wilren.sociallink;
 import java.util.Date;
 
 public class ModelChat {
-    private String userid, text;
+    private String userid, text,uri;
+
+    public ModelChat(String userid, String text, String uri, Date time) {
+        this.userid = userid;
+        this.text = text;
+        this.uri = uri;
+        this.time = time;
+    }
 
     public Date getTime() {
         return time;
@@ -44,4 +51,11 @@ public class ModelChat {
         this.time = time;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 }

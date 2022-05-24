@@ -69,12 +69,14 @@
         app:layout_constraintGuide_begin="20dp" />
 
 
-    <ImageView
+    <ImageButton
         android:id="@+id/userIdChat"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="0dp"
         android:src="@drawable/user"
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:layout_constraintVertical_bias="1.0" />
@@ -106,8 +108,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="User"
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        android:text="@string/user"
+        app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toEndOf="@+id/userIdChat"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

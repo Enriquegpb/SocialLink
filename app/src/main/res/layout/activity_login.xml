@@ -7,14 +7,14 @@
     tools:context=".Login">
 
     <TextView
-        android:id="@+id/imageViewMYL"
-        android:layout_width="120dp"
+        android:id="@+id/SLtext"
+        android:layout_width="0dp"
         android:layout_height="90dp"
-        android:text="SocialLink"
         android:gravity="center"
-        android:textSize="28sp"
-        android:textColor="@color/white"
         android:src="@android:color/transparent"
+        android:text="SocialLink"
+        android:textColor="@color/white"
+        android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
