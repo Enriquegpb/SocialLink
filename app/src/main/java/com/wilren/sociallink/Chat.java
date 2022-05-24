@@ -163,7 +163,6 @@ public class Chat extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE || requestCode == RESP_TOMAR_FOTO)) {
             imageUri = data.getData();
-            System.out.print("dsqdsaasdsa"+imageUri);
             //imgPerfil_newuser_class.setImageURI(imageUri);
             //imgPerfil_toolbar_class.setImageURI(imageUri);
 
