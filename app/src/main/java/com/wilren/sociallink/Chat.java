@@ -1,6 +1,10 @@
 package com.wilren.sociallink;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -11,17 +15,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.wilren.sociallink.Adaptador.AdapterChatAuth;
 
+import java.io.File;
 import java.util.Date;
+
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class Chat extends AppCompatActivity {
 
+    private static final int RESP_TOMAR_FOTO = 0;
+    private static final int PICK_IMAGE = 1;
     private RecyclerView rvMensajes;
     private LinearLayoutManager linearLayoutManager;
     private TextView NameUser;
@@ -31,6 +43,7 @@ public class Chat extends AppCompatActivity {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference chatreference = db.collection("chat");
+    private Uri imageUri;
 
     private void setComponents() {
         rvMensajes = findViewById(R.id.rvChat);
@@ -54,13 +67,17 @@ public class Chat extends AppCompatActivity {
         rvMensajes.setLayoutManager(linearLayoutManager);
         rvMensajes.setAdapter(AdaptadorChats);
         rvMensajes.setHasFixedSize(true);
+        rvMensajes.setItemAnimator(null);
+
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), new Date());
+                ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), user.getPhotoUrl().toString(), new Date());
                 chatreference.add(chat);
                 etMensaje.setText("");
+
+
             }
         });
     }
@@ -71,6 +88,13 @@ public class Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         setComponents();
         setUserDatachat();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changephoto(view);
+                btn.setImageURI(user.getPhotoUrl());
+            }
+        });
 
 
     }
@@ -94,34 +118,56 @@ public class Chat extends AppCompatActivity {
 
     }
 
-    /*private void openGallery(){
-        Intent gallery=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, (PICK_IMAGE));
+    public void changephoto(View view) {
+
+        openGallery();
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(Uri.parse(String.valueOf(imageUri)))
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("TAG", "User profile updated.");
+                        }
+                    }
+                });
+        AdaptadorChats.notifyDataSetChanged();
     }
 
-    private void openCamera(){
-        File fotoFile=new File(getApplicationContext().getFilesDir(),"fotoPerfil");
-        String pathFotoFile=fotoFile.getAbsolutePath();
-        Uri fotoUri=Uri.fromFile(fotoFile);
-        Intent camera=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(camera.resolveActivity(getPackageManager()) != null){
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    private void openCamera() {
+        File fotoFile = new File(getApplicationContext().getFilesDir(), "fotoPerfil");
+        String pathFotoFile = fotoFile.getAbsolutePath();
+        Uri fotoUri = Uri.fromFile(fotoFile);
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (camera.resolveActivity(getPackageManager()) != null) {
             camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
-            startActivityForResult(camera, (RESP_TOMAR_FOTO));
+            startActivityForResult(camera, RESP_TOMAR_FOTO);
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK && (requestCode==PICK_IMAGE || requestCode==RESP_TOMAR_FOTO )){
-            Uri imageUri = data.getData();
-            ImageSwitcher imgPerfil_newuser_class=null;
-            imgPerfil_newuser_class.setImageURI(imageUri);
-            ImageSwitcher imgPerfil_toolbar_class=null;
-            imgPerfil_toolbar_class.setImageURI(imageUri);
+        if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE || requestCode == RESP_TOMAR_FOTO)) {
+            imageUri = data.getData();
+            System.out.print("dsqdsaasdsa"+imageUri);
+            //imgPerfil_newuser_class.setImageURI(imageUri);
+            //imgPerfil_toolbar_class.setImageURI(imageUri);
 
 
         }
-    }*/
+    }
 }
