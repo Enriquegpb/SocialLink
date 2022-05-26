@@ -58,7 +58,6 @@ public class LoginTabFragment extends Fragment {
     public void login() {
         String mail = "persona3@gmail.com";
         String pass = "123456";
-        ArrayList <String> listaC = new ArrayList<>();
 
         if (mail.isEmpty()) {
             email.setError("");
@@ -70,14 +69,8 @@ public class LoginTabFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Persona persona = new Persona();
-                        persona.setId(mAuth.getUid());
-
                         Intent logeado = new Intent(getActivity(), MainActivity.class);
-
-                        logeado.putExtra("persona", persona);
                         startActivity(logeado);
-
                     } else {
                         Toast.makeText(getActivity(), "Login Failed", Toast.LENGTH_SHORT).show();
                     }

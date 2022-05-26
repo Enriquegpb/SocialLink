@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/busquedaUsuarios"
         android:layout_width="41dp"
         android:layout_height="33dp"
         android:layout_marginStart="220dp"
