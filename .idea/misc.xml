@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SocialLink/app/src/main/res/drawable/user.xml" value="0.22" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SocialLink/app/src/main/res/drawable/vista_mensajes.xml" value="0.22" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SocialLink/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SocialLink/app/src/main/res/layout/lista_mensajes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/kiketazo/AndroidStudioProjects/SocialLink/app/src/main/res/drawable/ic_send.xml" value="0.151" />
         <entry key="..\:/Users/kiketazo/AndroidStudioProjects/SocialLink/app/src/main/res/drawable/ic_send_white.xml" value="0.151" />
         <entry key="..\:/Users/kiketazo/AndroidStudioProjects/SocialLink/app/src/main/res/layout/activity_chat.xml" value="0.264" />

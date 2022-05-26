@@ -1,6 +1,7 @@
 package com.wilren.sociallink;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView listaMensajes;
     private AdaptadorMensaje adapter;
-    private ArrayList <String> contactos;
     private ArrayList <Persona> listaContactos;
+    private ArrayList <String> contactos;
+    private DatabaseReference db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,31 +33,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         contactos = getIntent().getStringArrayListExtra("con");
-        listaContactos = new ArrayList<>();
-        listaContactos = recuperarUsuarios();
+        listaMensajes = findViewById(R.id.listaMensajes);
+        recuperarUsuarios();
 
         adapter = new AdaptadorMensaje(listaContactos);
-        listaMensajes = findViewById(R.id.lista);
-
-        //Toast.makeText(this, contactos.toString(), Toast.LENGTH_SHORT).show();
-
         listaMensajes.setLayoutManager(new LinearLayoutManager(this));
-        listaMensajes.setAdapter(adapter);
 
     }
 
-    public ArrayList recuperarUsuarios(){
+    public void recuperarUsuarios(){
 
-        DatabaseReference db = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+        db = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
         listaContactos = new ArrayList<>();
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
-                    Persona persona = new Persona();
-                    persona.setNombre(dataSnapshot.child("nombre").getValue().toString());
-                    listaContactos.add(persona);
+                        String id = dataSnapshot.child("id").getValue().toString();
+
+                        for (int i = 0; i < contactos.size(); i++){
+                            if(id.equals(contactos.get(i))){
+                                Persona persona = new Persona();
+                                persona.setNombre(dataSnapshot.child("nombre").getValue().toString());
+                                persona.setId(dataSnapshot.child("id").getValue().toString());
+                                //persona.setFotoPerfil(dataSnapshot.child("perfil").getValue().toString());
+                                persona.setEmail(dataSnapshot.child("email").getValue().toString());
+                                listaContactos.add(persona);
+                            }
+                        }
                 }
+                listaMensajes.setAdapter(adapter);
             }
 
             @Override
@@ -63,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        return listaContactos;
-
     }
 
 

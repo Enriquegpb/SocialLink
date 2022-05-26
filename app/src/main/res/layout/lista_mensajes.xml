@@ -4,10 +4,10 @@
     android:id="@+id/mensajes"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     >
 
     <LinearLayout
-        android:background="#292F3F"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
