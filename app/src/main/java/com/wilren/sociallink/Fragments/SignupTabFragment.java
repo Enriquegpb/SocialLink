@@ -1,4 +1,4 @@
-package com.wilren.sociallink;
+package com.wilren.sociallink.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.wilren.sociallink.Persona.Persona;
+import com.wilren.sociallink.R;
 
 import java.util.ArrayList;
 

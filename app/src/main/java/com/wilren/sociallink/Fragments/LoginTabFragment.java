@@ -1,4 +1,4 @@
-package com.wilren.sociallink;
+package com.wilren.sociallink.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wilren.sociallink.MainActivity;
 import com.wilren.sociallink.Persona.Persona;
+import com.wilren.sociallink.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,8 +35,6 @@ public class LoginTabFragment extends Fragment {
     private EditText email, password;
     private FirebaseAuth mAuth;
     private FirebaseDatabase db;
-    private ArrayList <Persona> listaPersonas;
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment, container, false);
@@ -70,28 +70,13 @@ public class LoginTabFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Persona persona = null;
-                        //Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        Persona persona = new Persona();
+                        persona.setId(mAuth.getUid());
 
-                        //Intent logeado = new Intent(getContext(), MainActivity.class);
+                        Intent logeado = new Intent(getActivity(), MainActivity.class);
 
-                        DatabaseReference contactos = db.getReference("Contactos").child(mAuth.getUid());
-                        contactos.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                    listaC.add(dataSnapshot.getKey());
-                                }
-                                Intent logeado = new Intent(getActivity(), MainActivity.class);
-                                logeado.putStringArrayListExtra("con", listaC);
-                                startActivity(logeado);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                        logeado.putExtra("persona", persona);
+                        startActivity(logeado);
 
                     } else {
                         Toast.makeText(getActivity(), "Login Failed", Toast.LENGTH_SHORT).show();

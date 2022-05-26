@@ -1,9 +1,12 @@
-package com.wilren.sociallink;
+package com.wilren.sociallink.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.wilren.sociallink.Fragments.LoginTabFragment;
+import com.wilren.sociallink.Fragments.SignupTabFragment;
 
 public class LoginAdapter extends FragmentStateAdapter {
 

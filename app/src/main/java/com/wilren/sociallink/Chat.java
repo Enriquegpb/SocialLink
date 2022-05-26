@@ -122,7 +122,6 @@ public class Chat extends AppCompatActivity {
 
         openGallery();
 
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()

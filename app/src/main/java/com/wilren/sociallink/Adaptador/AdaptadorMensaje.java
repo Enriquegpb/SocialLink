@@ -1,5 +1,6 @@
 package com.wilren.sociallink.Adaptador;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wilren.sociallink.Chat;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
 
@@ -33,6 +35,15 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
         holder.nombre.setText(listaMensajes.get(position).getNombre());
         /*holder.ultMensaje.setText(listaMensajes.get(position).getUltMensaje());
         holder.fecha.setText(listaMensajes.get(position).getFecha());*/
+
+        holder.v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Chat.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -42,12 +53,13 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
 
     public class MensajesViewHolder extends RecyclerView.ViewHolder {
         TextView nombre, ultMensaje, fecha;
-
+        View v;
         public MensajesViewHolder(@NonNull View view) {
             super(view);
             nombre = view.findViewById(R.id.nombrePersona);
             ultMensaje = view.findViewById(R.id.ultimoMensaje);
             fecha = view.findViewById(R.id.fecha);
+            v = view;
         }
     }
 
