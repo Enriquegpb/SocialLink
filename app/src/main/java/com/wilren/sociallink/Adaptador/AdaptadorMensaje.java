@@ -40,6 +40,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Chat.class);
+                intent.putExtra("personaEnviar", listaMensajes.get(position));
                 view.getContext().startActivity(intent);
             }
         });

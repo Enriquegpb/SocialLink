@@ -24,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.wilren.sociallink.Adaptador.AdapterChatAuth;
+import com.wilren.sociallink.Persona.Persona;
 
 import java.io.File;
 import java.util.Date;
@@ -31,7 +32,7 @@ import java.util.Date;
 import io.reactivex.rxjava3.annotations.NonNull;
 
 public class Chat extends AppCompatActivity {
-
+    private Persona persona;
     private static final int RESP_TOMAR_FOTO = 0;
     private static final int PICK_IMAGE = 1;
     private RecyclerView rvMensajes;
@@ -42,16 +43,20 @@ public class Chat extends AppCompatActivity {
     private AdapterChatAuth AdaptadorChats;
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final CollectionReference chatreference = db.collection("chat");
+    private CollectionReference chatreference = db.collection(user.getUid());
     private Uri imageUri;
 
     private void setComponents() {
+        persona = getIntent().getParcelableExtra("personaEnviar");
+        chatreference = chatreference.document(persona.getId() + "mensajes").collection("mensajes");
+
         rvMensajes = findViewById(R.id.rvChat);
         etMensaje = findViewById(R.id.etMensajeChat);
         btnSend = findViewById(R.id.imageButton);
 
         Query query = FirebaseFirestore.getInstance()
-                .collection("chat").orderBy("time", Query.Direction.ASCENDING);
+                .collection(user.getUid()).document(persona.getId() + "mensajes").collection("mensajes")
+                .orderBy("time", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ModelChat> options = new FirestoreRecyclerOptions.Builder<ModelChat>().setQuery(query, ModelChat.class).build();
 
@@ -76,8 +81,6 @@ public class Chat extends AppCompatActivity {
                 ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), user.getPhotoUrl().toString(), new Date());
                 chatreference.add(chat);
                 etMensaje.setText("");
-
-
             }
         });
     }
@@ -164,8 +167,6 @@ public class Chat extends AppCompatActivity {
             imageUri = data.getData();
             //imgPerfil_newuser_class.setImageURI(imageUri);
             //imgPerfil_toolbar_class.setImageURI(imageUri);
-
-
         }
     }
 }

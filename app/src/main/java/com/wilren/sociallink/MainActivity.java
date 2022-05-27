@@ -32,14 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList <String> contactos;
     private FirebaseUser user;
     private ImageButton busquedaUsuarios;
-    private ArrayList <Persona> listaBusquedaUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listaBusquedaUsuarios = new ArrayList<>();
         busquedaUsuarios = findViewById(R.id.busquedaUsuarios);
         user = FirebaseAuth.getInstance().getCurrentUser();
         listaMensajes = findViewById(R.id.listaMensajes);
@@ -55,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public void recuperarUsuarios2(){
@@ -70,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     contactos.add(dataSnapshot.getKey());
+
                 }
                 recuperarUsuarios();
             }
@@ -88,12 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    Persona persona = new Persona();
                     String id = dataSnapshot.child("id").getValue().toString();
                     String nombre = dataSnapshot.child("nombre").getValue().toString();
                     String email = dataSnapshot.child("email").getValue().toString();
 
-                    persona = new Persona();
+                    Persona persona = new Persona();
                     persona.setNombre(nombre);
                     persona.setId(id);
                     //persona.setFotoPerfil(dataSnapshot.child("perfil").getValue().toString());
@@ -104,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                             listaContactos.add(persona);
                         }
                     }
-                    listaBusquedaUsuarios.add(persona);
                     listaMensajes.setAdapter(adapter);
 
                 }
