@@ -34,7 +34,6 @@ public class LoginTabFragment extends Fragment {
     private Button blogin;
     private EditText email, password;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase db;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment, container, false);
@@ -43,7 +42,6 @@ public class LoginTabFragment extends Fragment {
         email = root.findViewById(R.id.editTextTextEmail);
         password = root.findViewById(R.id.editTextTextPassword);
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
 
         blogin.setOnClickListener(new View.OnClickListener() {
             @Override

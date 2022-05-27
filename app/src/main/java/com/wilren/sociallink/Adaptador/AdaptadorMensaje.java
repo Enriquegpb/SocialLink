@@ -17,10 +17,11 @@ import java.util.ArrayList;
 
 public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.MensajesViewHolder> {
     private ArrayList<Persona> listaMensajes;
+    private String personaActual;
 
-    public AdaptadorMensaje(ArrayList<Persona> listaMensajes) {
+    public AdaptadorMensaje(ArrayList<Persona> listaMensajes, String personaActual) {
         this.listaMensajes = listaMensajes;
-
+        this.personaActual = personaActual;
     }
 
     @NonNull
@@ -41,6 +42,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Chat.class);
                 intent.putExtra("personaEnviar", listaMensajes.get(position));
+                intent.putExtra("personaActual", personaActual);
                 view.getContext().startActivity(intent);
             }
         });

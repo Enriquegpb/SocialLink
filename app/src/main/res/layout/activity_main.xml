@@ -26,17 +26,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
-    <ImageButton
-        android:id="@+id/busquedaUsuarios"
-        android:layout_width="41dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="220dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:srcCompat="@android:drawable/ic_menu_search"
-        />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
@@ -65,5 +54,14 @@
             android:paddingEnd="30dp"
             />
     </FrameLayout>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/busquedaUsuarios"
+        android:layout_width="159dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

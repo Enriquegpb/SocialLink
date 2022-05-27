@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,8 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.wilren.sociallink.Adaptador.AdapterChatAuth;
 import com.wilren.sociallink.Persona.Persona;
 
@@ -33,33 +38,34 @@ import io.reactivex.rxjava3.annotations.NonNull;
 
 public class Chat extends AppCompatActivity {
     private Persona persona;
-    private static final int RESP_TOMAR_FOTO = 0;
-    private static final int PICK_IMAGE = 1;
+    private String personaActual;
+    private final int RESP_TOMAR_FOTO = 0;
+    private final int PICK_IMAGE = 1;
     private RecyclerView rvMensajes;
     private LinearLayoutManager linearLayoutManager;
     private TextView NameUser;
     private EditText etMensaje;
     private ImageButton btnSend, btn;
     private AdapterChatAuth AdaptadorChats;
-    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference chatreference = db.collection(user.getUid());
+    private CollectionReference chatreference = db.collection("chat");
     private Uri imageUri;
 
     private void setComponents() {
+
+        personaActual = getIntent().getStringExtra("personaActual");
         persona = getIntent().getParcelableExtra("personaEnviar");
-        chatreference = chatreference.document(persona.getId() + "mensajes").collection("mensajes");
+        chatreference = chatreference.document(personaActual).collection(persona.id);
 
         rvMensajes = findViewById(R.id.rvChat);
         etMensaje = findViewById(R.id.etMensajeChat);
         btnSend = findViewById(R.id.imageButton);
 
-        Query query = FirebaseFirestore.getInstance()
-                .collection(user.getUid()).document(persona.getId() + "mensajes").collection("mensajes")
+        Query query = db.collection("chat").document(personaActual).collection(persona.id)
                 .orderBy("time", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ModelChat> options = new FirestoreRecyclerOptions.Builder<ModelChat>().setQuery(query, ModelChat.class).build();
-
         AdaptadorChats = new AdapterChatAuth(options);
         AdaptadorChats.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -78,7 +84,7 @@ public class Chat extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), user.getPhotoUrl().toString(), new Date());
+                ModelChat chat = new ModelChat("", etMensaje.getText().toString(), new Date());
                 chatreference.add(chat);
                 etMensaje.setText("");
             }
@@ -89,6 +95,7 @@ public class Chat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         setComponents();
         btn = findViewById(R.id.userIdChat);
         setUserDatachat();
@@ -117,15 +124,11 @@ public class Chat extends AppCompatActivity {
     public void setUserDatachat() {
         NameUser = findViewById(R.id.userNameChat);
         NameUser.setText(user.getEmail());
-
-
     }
 
     public void changephoto(View view) {
 
         openGallery();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(Uri.parse(String.valueOf(imageUri)))

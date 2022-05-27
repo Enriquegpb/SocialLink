@@ -4,6 +4,7 @@ package com.wilren.sociallink;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
@@ -31,42 +33,38 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference db;
     private ArrayList <String> contactos;
     private FirebaseUser user;
-    private ImageButton busquedaUsuarios;
+    private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+    private SearchView busquedaUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        busquedaUsuarios = findViewById(R.id.busquedaUsuarios);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         user = FirebaseAuth.getInstance().getCurrentUser();
+        Toast.makeText(getApplicationContext(), user.getEmail(), Toast.LENGTH_SHORT).show();
         listaMensajes = findViewById(R.id.listaMensajes);
+//        busquedaUsuarios = findViewById(R.id.busquedaUsuarios);
 
-        recuperarUsuarios2();
+        cargaUsuarios();
 
-        adapter = new AdaptadorMensaje(listaContactos);
+        adapter = new AdaptadorMensaje(listaContactos, user.getUid());
         listaMensajes.setLayoutManager(new LinearLayoutManager(this));
 
-        busquedaUsuarios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
-    public void recuperarUsuarios2(){
+    public void cargaUsuarios(){
         contactos = new ArrayList<>();
 
-        DatabaseReference data = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("Contactos").child(user.getUid());
+        DatabaseReference data = INSTANCIA.getReference("Contactos").child(user.getUid());
 
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     contactos.add(dataSnapshot.getKey());
-
                 }
                 recuperarUsuarios();
             }
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void recuperarUsuarios() {
 
-        db = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+        db = INSTANCIA.getReference("Users");
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
