@@ -38,7 +38,6 @@ import io.reactivex.rxjava3.annotations.NonNull;
 
 public class Chat extends AppCompatActivity {
     private Persona persona;
-    private String personaActual;
     private final int RESP_TOMAR_FOTO = 0;
     private final int PICK_IMAGE = 1;
     private RecyclerView rvMensajes;
@@ -54,15 +53,14 @@ public class Chat extends AppCompatActivity {
 
     private void setComponents() {
 
-        personaActual = getIntent().getStringExtra("personaActual");
         persona = getIntent().getParcelableExtra("personaEnviar");
-        chatreference = chatreference.document(personaActual).collection(persona.id);
+        chatreference = chatreference.document(user.getUid()).collection(persona.id);
 
         rvMensajes = findViewById(R.id.rvChat);
         etMensaje = findViewById(R.id.etMensajeChat);
         btnSend = findViewById(R.id.imageButton);
 
-        Query query = db.collection("chat").document(personaActual).collection(persona.id)
+        Query query = db.collection("chat").document(user.getUid()).collection(persona.id)
                 .orderBy("time", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ModelChat> options = new FirestoreRecyclerOptions.Builder<ModelChat>().setQuery(query, ModelChat.class).build();
@@ -84,7 +82,7 @@ public class Chat extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModelChat chat = new ModelChat("", etMensaje.getText().toString(), new Date());
+                ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), new Date());
                 chatreference.add(chat);
                 etMensaje.setText("");
             }

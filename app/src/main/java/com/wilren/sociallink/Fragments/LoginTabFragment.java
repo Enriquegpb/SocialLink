@@ -50,7 +50,6 @@ public class LoginTabFragment extends Fragment {
             }
         });
         return root;
-
     }
 
     public void login() {

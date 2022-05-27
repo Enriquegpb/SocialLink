@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         cargaUsuarios();
 
-        adapter = new AdaptadorMensaje(listaContactos, user.getUid());
+        adapter = new AdaptadorMensaje(listaContactos);
         listaMensajes.setLayoutManager(new LinearLayoutManager(this));
 
     }
