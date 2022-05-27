@@ -49,12 +49,14 @@ public class Chat extends AppCompatActivity {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatreference = db.collection("chat");
+    private CollectionReference chatEnviar = chatreference;
     private Uri imageUri;
 
     private void setComponents() {
 
         persona = getIntent().getParcelableExtra("personaEnviar");
         chatreference = chatreference.document(user.getUid()).collection(persona.id);
+        chatEnviar = chatEnviar.document(persona.getId()).collection(user.getUid());
 
         rvMensajes = findViewById(R.id.rvChat);
         etMensaje = findViewById(R.id.etMensajeChat);
@@ -84,6 +86,7 @@ public class Chat extends AppCompatActivity {
             public void onClick(View v) {
                 ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), new Date());
                 chatreference.add(chat);
+                chatEnviar.add(chat);
                 etMensaje.setText("");
             }
         });
