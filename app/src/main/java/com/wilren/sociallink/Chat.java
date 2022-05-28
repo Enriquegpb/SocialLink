@@ -124,9 +124,11 @@ public class Chat extends AppCompatActivity {
 
     public void setUserDatachat() {
         NameUser = findViewById(R.id.userNameChat);
-        NameUser.setText(user.getEmail());
+        NameUser.setText(persona.getNombre());
     }
 
+
+    //hasta aqui
     public void changephoto(View view) {
 
         openGallery();
