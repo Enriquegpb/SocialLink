@@ -28,8 +28,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/user"
-                />
+                android:src="@drawable/user" />
 
             <LinearLayout
                 android:id="@+id/parteEscrita"

@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="64dp"
+    android:layout_marginEnd="64dp"
     android:layout_marginBottom="16dp"
-
-
     >
 
     <androidx.cardview.widget.CardView
@@ -35,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="textStart"
-
             android:layout_marginTop="10dp"
             android:textColor="@color/white"
             android:textSize="20sp"
