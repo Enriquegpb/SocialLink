@@ -1,5 +1,6 @@
 package com.wilren.sociallink;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +53,7 @@ public class Chat extends AppCompatActivity {
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
     private Uri imageUri;
+    private String mensaje;
 
     private void setComponents() {
 
@@ -84,12 +87,15 @@ public class Chat extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModelChat chat = new ModelChat(user.getUid(), etMensaje.getText().toString(), new Date());
+                mensaje = etMensaje.getText().toString();
+                ModelChat chat = new ModelChat(user.getUid(), mensaje, new Date());
                 chatreference.add(chat);
                 chatEnviar.add(chat);
                 etMensaje.setText("");
             }
         });
+
+
     }
 
     @Override
@@ -107,8 +113,6 @@ public class Chat extends AppCompatActivity {
                 btn.setImageURI(user.getPhotoUrl());
             }
         });
-
-
     }
 
     @Override
@@ -174,5 +178,22 @@ public class Chat extends AppCompatActivity {
             //imgPerfil_newuser_class.setImageURI(imageUri);
             //imgPerfil_toolbar_class.setImageURI(imageUri);
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ultimoMensaje();
+        this.finish();
+    }
+
+    public void ultimoMensaje(){
+        FirebaseDatabase fbdb = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+        fbdb.getReference().child("Contactos").
+                child(user.getUid()).
+                child(persona.getId()).
+                child("ultimoMensaje").setValue(mensaje);
+
     }
 }

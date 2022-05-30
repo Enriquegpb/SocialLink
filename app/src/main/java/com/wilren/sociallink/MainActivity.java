@@ -1,13 +1,18 @@
 package com.wilren.sociallink;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,19 +46,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         Toast.makeText(getApplicationContext(), user.getEmail(), Toast.LENGTH_SHORT).show();
         listaMensajes = findViewById(R.id.listaMensajes);
-//        busquedaUsuarios = findViewById(R.id.busquedaUsuarios);
+
+        //        busquedaUsuarios = findViewById(R.id.busquedaUsuarios);
 
         cargaUsuarios();
 
         adapter = new AdaptadorMensaje(listaContactos);
         listaMensajes.setLayoutManager(new LinearLayoutManager(this));
-
     }
+
 
     public void cargaUsuarios(){
         contactos = new ArrayList<>();
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+
     }
 
     public void recuperarUsuarios() {
@@ -98,14 +103,12 @@ public class MainActivity extends AppCompatActivity {
                             listaContactos.add(persona);
                         }
                     }
-                    listaMensajes.setAdapter(adapter);
-
                 }
+                listaMensajes.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
-
 
 }

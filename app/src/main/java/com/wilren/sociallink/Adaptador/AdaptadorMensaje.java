@@ -1,15 +1,20 @@
 package com.wilren.sociallink.Adaptador;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wilren.sociallink.Chat;
+import com.wilren.sociallink.MainActivity;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
 
@@ -62,6 +67,5 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             v = view;
         }
     }
-
 
 }
