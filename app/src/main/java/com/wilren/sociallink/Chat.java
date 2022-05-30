@@ -35,6 +35,7 @@ import com.wilren.sociallink.Persona.Persona;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
@@ -52,13 +53,14 @@ public class Chat extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
+    private CollectionReference lastMessage = chatreference;
     private Uri imageUri;
     private String mensaje;
 
     private void setComponents() {
 
         persona = getIntent().getParcelableExtra("personaEnviar");
-        chatreference = chatreference.document(user.getUid()).collection(persona.id);
+        chatreference = chatreference.document(user.getUid()).collection(persona.getId());
         chatEnviar = chatEnviar.document(persona.getId()).collection(user.getUid());
 
         rvMensajes = findViewById(R.id.rvChat);
@@ -82,7 +84,6 @@ public class Chat extends AppCompatActivity {
         rvMensajes.setAdapter(AdaptadorChats);
         rvMensajes.setHasFixedSize(true);
         rvMensajes.setItemAnimator(null);
-
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,15 +186,11 @@ public class Chat extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         ultimoMensaje();
-        this.finish();
     }
 
     public void ultimoMensaje(){
-        FirebaseDatabase fbdb = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
-        fbdb.getReference().child("Contactos").
-                child(user.getUid()).
-                child(persona.getId()).
-                child("ultimoMensaje").setValue(mensaje);
-
+        HashMap <String, String> map = new HashMap<>();
+        map.put("ultimoMensaje", mensaje);
+        lastMessage.document(user.getUid()).set(map);
     }
 }

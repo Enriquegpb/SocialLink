@@ -1,21 +1,14 @@
 package com.wilren.sociallink;
 
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
@@ -34,46 +27,54 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView listaMensajes;
     private AdaptadorMensaje adapter;
-    private ArrayList <Persona> listaContactos = new ArrayList<>();
+    private ArrayList<Persona> listaUsuarios = new ArrayList<>();
     private DatabaseReference db;
-    private ArrayList <String> contactos;
+    private ArrayList<Persona> contactos;
     private FirebaseUser user;
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
-    private SearchView busquedaUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(getApplicationContext(), user.getEmail(), Toast.LENGTH_SHORT).show();
-        listaMensajes = findViewById(R.id.listaMensajes);
+        recuperarUsuarios();
 
-        //        busquedaUsuarios = findViewById(R.id.busquedaUsuarios);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        listaMensajes = findViewById(R.id.listaMensajes);
+        contactos = new ArrayList<>();
 
         cargaUsuarios();
 
-        adapter = new AdaptadorMensaje(listaContactos);
-        listaMensajes.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new AdaptadorMensaje(contactos);
+        listaMensajes.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
     }
 
-
-    public void cargaUsuarios(){
-        contactos = new ArrayList<>();
+    public void cargaUsuarios() {
 
         DatabaseReference data = INSTANCIA.getReference("Contactos").child(user.getUid());
 
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    contactos.add(dataSnapshot.getKey());
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    for (int i = 0; i < listaUsuarios.size(); i++) {
+                        if(dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())){
+                            Persona persona = listaUsuarios.get(i);
+                            persona.setUltimoMensaje("");
+                            contactos.add(persona);
+                        }
+                    }
                 }
-                recuperarUsuarios();
+                adapter.notifyItemRangeInserted(0, contactos.size());
+                listaMensajes.setAdapter(adapter);
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
 
     }
@@ -87,24 +88,16 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
                     String id = dataSnapshot.child("id").getValue().toString();
                     String nombre = dataSnapshot.child("nombre").getValue().toString();
                     String email = dataSnapshot.child("email").getValue().toString();
 
                     Persona persona = new Persona();
+                    persona.setEmail(email);
                     persona.setNombre(nombre);
                     persona.setId(id);
-                    //persona.setFotoPerfil(dataSnapshot.child("perfil").getValue().toString());
-                    persona.setEmail(email);
-
-                    for (int i = 0; i < contactos.size(); i++) {
-                        if (id.equals(contactos.get(i))) {
-                            listaContactos.add(persona);
-                        }
-                    }
+                    listaUsuarios.add(persona);
                 }
-                listaMensajes.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}

@@ -13,6 +13,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.wilren.sociallink.Chat;
 import com.wilren.sociallink.MainActivity;
 import com.wilren.sociallink.Persona.Persona;
@@ -37,8 +42,8 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
     @Override
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
         holder.nombre.setText(listaMensajes.get(position).getNombre());
-        /*holder.ultMensaje.setText(listaMensajes.get(position).getUltMensaje());
-        holder.fecha.setText(listaMensajes.get(position).getFecha());*/
+        holder.ultMensaje.setText(listaMensajes.get(position).getUltimoMensaje());
+//        holder.fecha.setText(listaMensajes.get(position).getFecha());
 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,5 +72,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             v = view;
         }
     }
+
+
 
 }
