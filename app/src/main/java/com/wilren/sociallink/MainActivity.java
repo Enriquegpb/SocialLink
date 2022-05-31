@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         contactos = new ArrayList<>();
         usuariosContactos = new ArrayList<>();
 
-        adapter = new AdaptadorMensaje(contactos, MainActivity.this);
+        adapter = new AdaptadorMensaje(contactos, MainActivity.this, user.getUid());
         cargaUsuarios();
         listaMensajes.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     public void cargaUsuarios() {
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 listaMensajes.setAdapter(adapter);
-
             }
 
             @Override
