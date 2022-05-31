@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -189,8 +190,14 @@ public class Chat extends AppCompatActivity {
     }
 
     public void ultimoMensaje(){
-        HashMap <String, String> map = new HashMap<>();
-        map.put("ultimoMensaje", mensaje);
-        lastMessage.document(user.getUid()).set(map);
+        FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").
+                getReference("Contactos").
+                child(user.getUid()).
+                child(persona.getId()).
+                child("ultimoMensaje").setValue(mensaje);
+
+//        HashMap <String, String> map = new HashMap<>();
+//        map.put("ultimoMensaje", mensaje);
+//        lastMessage.document(user.getUid()).set(map);
     }
 }

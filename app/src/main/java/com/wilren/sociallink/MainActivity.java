@@ -36,9 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         recuperarUsuarios();
+        setContentView(R.layout.activity_main);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         listaMensajes = findViewById(R.id.listaMensajes);
@@ -47,29 +46,41 @@ public class MainActivity extends AppCompatActivity {
         cargaUsuarios();
 
         adapter = new AdaptadorMensaje(contactos);
+        listaMensajes.setAdapter(adapter);
         listaMensajes.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
 
     }
 
     public void cargaUsuarios() {
-
         DatabaseReference data = INSTANCIA.getReference("Contactos").child(user.getUid());
+        data.keepSynced(true);
 
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    for (int i = 0; i < listaUsuarios.size(); i++) {
-                        if(dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())){
-                            Persona persona = listaUsuarios.get(i);
-                            persona.setUltimoMensaje("");
-                            contactos.add(persona);
+                    if(dataSnapshot.hasChildren()){
+                        for (int i = 0; i < listaUsuarios.size(); i++) {
+                            if(dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())){
+                                Persona persona = listaUsuarios.get(i);
+                                persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
+                                if(!contactos.contains(persona)){
+                                    contactos.add(persona);
+                                }else{
+                                    for (int j = 0; j < contactos.size(); j++) {
+                                        Persona p = contactos.get(j);
+                                        persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
+                                        contactos.set(j, p);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
                 adapter.notifyItemRangeInserted(0, contactos.size());
-                listaMensajes.setAdapter(adapter);
             }
 
             @Override
@@ -82,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public void recuperarUsuarios() {
 
         db = INSTANCIA.getReference("Users");
-
+        db.keepSynced(true);
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
