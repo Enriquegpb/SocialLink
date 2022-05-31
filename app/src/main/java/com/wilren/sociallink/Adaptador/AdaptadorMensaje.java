@@ -80,12 +80,10 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         borrarConversacion(listaMensajes.get(position).getId());
-
                     }
                 });
                 builder.setNegativeButton("Cancelar", null);
-                AlertDialog alert = builder.create();
-                alert.show();
+                builder.create().show();
                 return true;
             }
         });

@@ -92,10 +92,12 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mensaje = etMensaje.getText().toString();
-                ModelChat chat = new ModelChat(user.getUid(), mensaje, new Date());
-                chatreference.add(chat);
-                chatEnviar.add(chat);
-                etMensaje.setText("");
+                if(!mensaje.isEmpty()){
+                    ModelChat chat = new ModelChat(user.getUid(), mensaje, new Date());
+                    chatreference.add(chat);
+                    chatEnviar.add(chat);
+                    etMensaje.setText("");
+                }
             }
         });
 
