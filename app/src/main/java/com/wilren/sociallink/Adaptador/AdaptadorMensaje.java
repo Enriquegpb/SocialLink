@@ -42,6 +42,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
     private Activity activity;
     private String persona;
     private CollectionReference chatreference;
+
     public AdaptadorMensaje(ArrayList<Persona> listaMensajes, Activity activity, String persona) {
         this.listaMensajes = listaMensajes;
         this.activity = activity;

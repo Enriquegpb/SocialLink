@@ -64,4 +64,10 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
             view = v;
         }
     }
+
+    public void setFilteredList(ArrayList listaPersonasBusqueda){
+        this.listaPersonas = listaPersonasBusqueda;
+        notifyDataSetChanged();
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.wilren.sociallink;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.wilren.sociallink.AdaptadorBusquedaUsuario.AdapterBusquedaUsuario;
 import com.wilren.sociallink.Persona.Persona;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class BusquedaUsuariosActivity extends AppCompatActivity {
 
@@ -29,9 +31,7 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
     private ArrayList <Persona> listaPersonas;
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
     private ArrayList <String> listaContactos;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,21 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
         listaBusquedaUsuario = findViewById(R.id.listaBusquedaUsuarios);
 
         rellenoPersonas();
+
         adapter = new AdapterBusquedaUsuario(listaPersonas, BusquedaUsuariosActivity.this);
         listaBusquedaUsuario.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listarUsuarios(newText);
+                return true;
+            }
+        });
 
     }
 
@@ -72,19 +85,29 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
 
                         listaPersonas.add(persona);
                         adapter.notifyItemRangeInserted(0, listaContactos.size());
-
                     }
                 }
                 listaBusquedaUsuario.setAdapter(adapter);
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+    }
 
+    private void listarUsuarios(String text){
+        ArrayList <Persona> personas = new ArrayList<>();
+        for (Persona i:listaPersonas) {
+            if(i.getNombre().toLowerCase().contains(text.toLowerCase())){
+                personas.add(i);
+            }
+        }
+        if(personas.isEmpty()){
+            Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
+        }else{
+            adapter.setFilteredList(personas);
+        }
     }
 
 }
