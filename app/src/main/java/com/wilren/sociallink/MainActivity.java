@@ -1,14 +1,15 @@
 package com.wilren.sociallink;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +24,8 @@ import com.wilren.sociallink.Persona.Persona;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView listaMensajes;
@@ -32,55 +35,58 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Persona> contactos;
     private FirebaseUser user;
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+    private CircleImageView searchView;
+    private ArrayList <String> usuariosContactos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recuperarUsuarios();
         setContentView(R.layout.activity_main);
+        INSTANCIA.setPersistenceEnabled(true);
 
+        recuperarUsuarios();
         user = FirebaseAuth.getInstance().getCurrentUser();
         listaMensajes = findViewById(R.id.listaMensajes);
+        searchView = findViewById(R.id.busquedaUsuarios);
+
         contactos = new ArrayList<>();
+        usuariosContactos = new ArrayList<>();
 
+        adapter = new AdaptadorMensaje(contactos, MainActivity.this);
         cargaUsuarios();
-
-        adapter = new AdaptadorMensaje(contactos);
-        listaMensajes.setAdapter(adapter);
         listaMensajes.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, BusquedaUsuariosActivity.class);
+                intent.putExtra("contactos", usuariosContactos);
+                startActivity(intent);
+            }
+        });
 
     }
 
     public void cargaUsuarios() {
         DatabaseReference data = INSTANCIA.getReference("Contactos").child(user.getUid());
         data.keepSynced(true);
-
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if(dataSnapshot.hasChildren()){
-                        for (int i = 0; i < listaUsuarios.size(); i++) {
-                            if(dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())){
-                                Persona persona = listaUsuarios.get(i);
-                                persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
-                                if(!contactos.contains(persona)){
-                                    contactos.add(persona);
-                                }else{
-                                    for (int j = 0; j < contactos.size(); j++) {
-                                        Persona p = contactos.get(j);
-                                        persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
-                                        contactos.set(j, p);
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }
+                    for (int i = 0; i < listaUsuarios.size(); i++) {
+                        if (dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())) {
+                            Persona persona = listaUsuarios.get(i);
+                            if (!contactos.contains(persona)) {
+                                usuariosContactos.add(persona.getId());
+                                contactos.add(persona);
+                                adapter.notifyItemRangeInserted(0, contactos.size());
                             }
                         }
                     }
                 }
-                adapter.notifyItemRangeInserted(0, contactos.size());
+                listaMensajes.setAdapter(adapter);
+
             }
 
             @Override
@@ -111,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 

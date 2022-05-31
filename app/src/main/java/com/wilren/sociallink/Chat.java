@@ -57,9 +57,11 @@ public class Chat extends AppCompatActivity {
     private CollectionReference lastMessage = chatreference;
     private Uri imageUri;
     private String mensaje;
+    private boolean nuevo;
 
     private void setComponents() {
 
+        nuevo = getIntent().getExtras().getBoolean("nuevo");
         persona = getIntent().getParcelableExtra("personaEnviar");
         chatreference = chatreference.document(user.getUid()).collection(persona.getId());
         chatEnviar = chatEnviar.document(persona.getId()).collection(user.getUid());
@@ -186,15 +188,21 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ultimoMensaje();
+        if(nuevo && mensaje.length() > 0){
+            ultimoMensaje();
+        }
     }
 
     public void ultimoMensaje(){
         FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").
                 getReference("Contactos").
                 child(user.getUid()).
+                child(persona.getId()).setValue("");
+
+        FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").
+                getReference("Contactos").
                 child(persona.getId()).
-                child("ultimoMensaje").setValue(mensaje);
+                child(user.getUid()).setValue("");
 
 //        HashMap <String, String> map = new HashMap<>();
 //        map.put("ultimoMensaje", mensaje);

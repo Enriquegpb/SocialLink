@@ -15,7 +15,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="3dp">
 
@@ -31,7 +31,7 @@
 
             <LinearLayout
                 android:id="@+id/parteEscrita"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
@@ -43,33 +43,13 @@
                 <TextView
                     android:id="@+id/nombrePersona"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="Nombre"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     />
-                <TextView
-                    android:id="@+id/ultimoMensaje"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ultimo mensaje"
-                    android:textSize="14sp"
-                    android:textColor="#B3B9C9"
-                    />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/fecha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="Fecha"
-                android:textSize="14sp"
-                android:textColor="#B3B9C9"
-                />
         </RelativeLayout>
     </LinearLayout>
 
