@@ -4,38 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="64dp"
-    android:layout_marginBottom="16dp"
-    >
+    android:layout_marginBottom="16dp">
 
     <androidx.cardview.widget.CardView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardBackgroundColor="@color/colorMensajeIzquierda"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/idtime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:text="fecha"
+            android:paddingLeft="8sp"
+            android:paddingRight="8sp"
+            android:paddingTop="4sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/idtext"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textAlignment="textStart"
             android:layout_marginTop="10dp"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:text="meensaje"
+            android:padding="8sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idtime" />
