@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.storage.FirebaseStorage;
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Persona> contactos;
     private FirebaseUser user;
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+    private FirebaseStorage bdFotoPerfil;
     private CircleImageView searchView;
     private ArrayList <String> usuariosContactos;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         recuperarUsuarios();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        bdFotoPerfil = FirebaseStorage.getInstance();
         listaMensajes = findViewById(R.id.listaMensajes);
         searchView = findViewById(R.id.busquedaUsuarios);
 
@@ -106,11 +109,14 @@ public class MainActivity extends AppCompatActivity {
                     String id = dataSnapshot.child("id").getValue().toString();
                     String nombre = dataSnapshot.child("nombre").getValue().toString();
                     String email = dataSnapshot.child("email").getValue().toString();
+                    String fotoPerfil = dataSnapshot.child("fotoPerfil").getValue().toString();
 
                     Persona persona = new Persona();
                     persona.setEmail(email);
                     persona.setNombre(nombre);
                     persona.setId(id);
+                    persona.setFotoPerfil(fotoPerfil);
+
                     listaUsuarios.add(persona);
                 }
             }

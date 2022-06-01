@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Adaptador.AdapterChatAuth;
 import com.wilren.sociallink.Persona.Persona;
 
@@ -38,9 +39,11 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.annotations.NonNull;
 
 public class Chat extends AppCompatActivity {
+
     private Persona persona;
     private final int RESP_TOMAR_FOTO = 0;
     private final int PICK_IMAGE = 1;
@@ -48,13 +51,13 @@ public class Chat extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private TextView NameUser;
     private EditText etMensaje;
-    private ImageButton btnSend, btn;
+    private ImageButton btnSend;
+    private CircleImageView perfil;
     private AdapterChatAuth AdaptadorChats;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
-    private CollectionReference lastMessage = chatreference;
     private Uri imageUri;
     private String mensaje;
     private boolean nuevo;
@@ -63,6 +66,7 @@ public class Chat extends AppCompatActivity {
 
         nuevo = getIntent().getExtras().getBoolean("nuevo");
         persona = getIntent().getParcelableExtra("personaEnviar");
+
         chatreference = chatreference.document(user.getUid()).collection(persona.getId());
         chatEnviar = chatEnviar.document(persona.getId()).collection(user.getUid());
 
@@ -100,8 +104,6 @@ public class Chat extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     @Override
@@ -110,13 +112,14 @@ public class Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         setComponents();
-        btn = findViewById(R.id.userIdChat);
         setUserDatachat();
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changephoto(view);
-                btn.setImageURI(user.getPhotoUrl());
+//                changephoto(view);
+
+                Toast.makeText(Chat.this, "Futura informacion del usuario.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -135,57 +138,60 @@ public class Chat extends AppCompatActivity {
     public void setUserDatachat() {
         NameUser = findViewById(R.id.userNameChat);
         NameUser.setText(persona.getNombre());
-    }
-
-
-    //hasta aqui
-    public void changephoto(View view) {
-
-        openGallery();
-
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(Uri.parse(String.valueOf(imageUri)))
-                .build();
-
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "User profile updated.");
-                        }
-                    }
-                });
-        AdaptadorChats.notifyDataSetChanged();
-    }
-
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
-    }
-
-    private void openCamera() {
-        File fotoFile = new File(getApplicationContext().getFilesDir(), "fotoPerfil");
-        String pathFotoFile = fotoFile.getAbsolutePath();
-        Uri fotoUri = Uri.fromFile(fotoFile);
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (camera.resolveActivity(getPackageManager()) != null) {
-            camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
-            startActivityForResult(camera, RESP_TOMAR_FOTO);
+        perfil = findViewById(R.id.avatarUsuario);
+        if(!persona.getFotoPerfil().isEmpty()){
+            Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(perfil);
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE || requestCode == RESP_TOMAR_FOTO)) {
-            imageUri = data.getData();
-            //imgPerfil_newuser_class.setImageURI(imageUri);
-            //imgPerfil_toolbar_class.setImageURI(imageUri);
-        }
-    }
-
+//    //hasta aqui
+//    public void changephoto(View view) {
+//
+//        openGallery();
+//
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setPhotoUri(Uri.parse(String.valueOf(imageUri)))
+//                .build();
+//
+//        user.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d("TAG", "User profile updated.");
+//                        }
+//                    }
+//                });
+//        AdaptadorChats.notifyDataSetChanged();
+//    }
+//
+//    private void openGallery() {
+//        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//        startActivityForResult(gallery, PICK_IMAGE);
+//    }
+//
+//    private void openCamera() {
+//        File fotoFile = new File(getApplicationContext().getFilesDir(), "fotoPerfil");
+//        String pathFotoFile = fotoFile.getAbsolutePath();
+//        Uri fotoUri = Uri.fromFile(fotoFile);
+//        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (camera.resolveActivity(getPackageManager()) != null) {
+//            camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
+//            startActivityForResult(camera, RESP_TOMAR_FOTO);
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE || requestCode == RESP_TOMAR_FOTO)) {
+//            imageUri = data.getData();
+//            //imgPerfil_newuser_class.setImageURI(imageUri);
+//            //imgPerfil_toolbar_class.setImageURI(imageUri);
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
@@ -206,8 +212,5 @@ public class Chat extends AppCompatActivity {
                 child(persona.getId()).
                 child(user.getUid()).setValue("");
 
-//        HashMap <String, String> map = new HashMap<>();
-//        map.put("ultimoMensaje", mensaje);
-//        lastMessage.document(user.getUid()).set(map);
     }
 }

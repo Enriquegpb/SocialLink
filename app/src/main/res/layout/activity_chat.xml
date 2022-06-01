@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"
@@ -69,13 +69,11 @@
         app:layout_constraintGuide_begin="20dp" />
 
 
-    <ImageButton
-        android:id="@+id/userIdChat"
-        android:layout_width="48dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatarUsuario"
+        android:layout_width="80dp"
         android:layout_height="0dp"
         android:src="@drawable/user"
-        android:scaleType="fitCenter"
-
         app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
@@ -111,7 +109,7 @@
         android:text="@string/user"
         android:paddingLeft="10dp"
         app:layout_constraintBottom_toTopOf="@+id/rvChat"
-        app:layout_constraintStart_toEndOf="@+id/userIdChat"
+        app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

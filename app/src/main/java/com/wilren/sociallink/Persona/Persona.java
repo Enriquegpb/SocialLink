@@ -3,23 +3,19 @@ package com.wilren.sociallink.Persona;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Persona implements Parcelable {
 
     public String id, nombre, email, fotoPerfil, ultimoMensaje;
+    private CircleImageView perfil;
 
     public Persona(String id, String nombre, String email, String fotoPerfil) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.fotoPerfil = fotoPerfil;
-    }
-    public Persona(String id, String nombre, String email, String fotoPerfil, String ultimoMensaje) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
-        this.fotoPerfil = fotoPerfil;
-        this.ultimoMensaje = ultimoMensaje;
     }
 
     public Persona(){}
@@ -44,6 +40,14 @@ public class Persona implements Parcelable {
             return new Persona[size];
         }
     };
+
+    public CircleImageView getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(CircleImageView perfil) {
+        this.perfil = perfil;
+    }
 
     public String getUltimoMensaje() {
         return ultimoMensaje;

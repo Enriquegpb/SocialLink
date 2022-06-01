@@ -3,6 +3,7 @@ package com.wilren.sociallink.Adaptador;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Chat;
 import com.wilren.sociallink.MainActivity;
 import com.wilren.sociallink.ModelChat;
@@ -36,6 +39,8 @@ import com.wilren.sociallink.R;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.MensajesViewHolder> {
     private ArrayList<Persona> listaMensajes;
@@ -58,19 +63,27 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
 
     @Override
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
-        holder.nombre.setText(listaMensajes.get(position).getNombre());
-        holder.ultMensaje.setText(listaMensajes.get(position).getUltimoMensaje());
+        Persona persona = listaMensajes.get(position);
+
+        holder.nombre.setText(persona.getNombre());
+        holder.ultMensaje.setText(persona.getUltimoMensaje());
+
+        if(!persona.getFotoPerfil().isEmpty()){
+            Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(holder.fotoPerfil);
+        }
+
 //        holder.fecha.setText(listaMensajes.get(position).getFecha());
 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, Chat.class);
-                intent.putExtra("personaEnviar", listaMensajes.get(position));
+                intent.putExtra("personaEnviar",persona);
                 intent.putExtra("nuevo", false);
                 activity.startActivity(intent);
             }
         });
+
         holder.v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -83,6 +96,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
                         borrarConversacion(listaMensajes.get(position).getId());
                     }
                 });
+
                 builder.setNegativeButton("Cancelar", null);
                 builder.create().show();
                 return true;
@@ -96,13 +110,15 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
     }
 
     public class MensajesViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre, ultMensaje, fecha;
+        private CircleImageView fotoPerfil;
+        private TextView nombre, ultMensaje, fecha;
         View v;
         public MensajesViewHolder(@NonNull View view) {
             super(view);
             nombre = view.findViewById(R.id.nombrePersona);
             ultMensaje = view.findViewById(R.id.ultimoMensaje);
             fecha = view.findViewById(R.id.fecha);
+            fotoPerfil = view.findViewById(R.id.avatar);
             v = view;
         }
     }
