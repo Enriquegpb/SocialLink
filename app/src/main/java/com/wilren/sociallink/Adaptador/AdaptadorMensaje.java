@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -140,7 +141,6 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
 
         Toast.makeText(activity, "conversacion borrada", Toast.LENGTH_SHORT).show();
     }
-
 
 
 }

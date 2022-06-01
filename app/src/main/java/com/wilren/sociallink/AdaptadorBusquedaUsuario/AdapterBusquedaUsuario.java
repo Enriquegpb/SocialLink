@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Chat;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
@@ -51,6 +52,11 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
                 activity.finish();
             }
         });
+
+        if(!persona.getFotoPerfil().isEmpty()){
+            Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(holder.fotoPerfil);
+        }
+
     }
 
     @Override

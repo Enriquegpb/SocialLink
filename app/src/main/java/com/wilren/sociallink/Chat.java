@@ -64,6 +64,7 @@ public class Chat extends AppCompatActivity {
                 .orderBy("time", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ModelChat> options = new FirestoreRecyclerOptions.Builder<ModelChat>().setQuery(query, ModelChat.class).build();
+
         AdaptadorChats = new AdapterChatAuth(options);
         AdaptadorChats.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override

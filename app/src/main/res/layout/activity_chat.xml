@@ -8,13 +8,6 @@
     android:background="@color/midarkblue"
     android:fitsSystemWindows="true"
     >
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/guideline4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintGuide_percent="0.95"-->
-<!--        />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -41,7 +34,6 @@
         android:hint="Mensaje ..."
         android:inputType="textMultiLine"
         android:layout_marginBottom="10dp"
-
         android:paddingLeft="20dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
@@ -88,16 +80,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:layout_constraintVertical_bias="1.0" />
-
-    <!--<ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:backgroundTint="@color/midarkblue"
-        android:src="@drawable/ic_camera"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/rvChat"
-        app:layout_constraintTop_toTopOf="@+id/etMensajeChat" />-->
 
     <ImageButton
         android:id="@+id/imageButton"
