@@ -26,6 +26,7 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
 
     PrettyTime p = new PrettyTime();
 
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -41,6 +42,9 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
 
     @Override
     protected void onBindViewHolder(@NonNull MessengeHolder holder, int position, @NonNull ModelChat model) {
+//        Una forma mas bonita de hacer la fecha
+//        Date fecha = model.getTime();
+//        String tiempo = fecha.getHours() +":"+ fecha.getMinutes() + "";
         holder.timeTv.setText(p.format(model.getTime()));
         holder.textTv.setText(model.getText());
     }
@@ -68,12 +72,10 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
 
     public class MessengeHolder extends RecyclerView.ViewHolder {
         private final TextView timeTv, textTv;
-
         public MessengeHolder(@NonNull View itemView) {
             super(itemView);
             timeTv = itemView.findViewById(R.id.idtime);
             textTv = itemView.findViewById(R.id.idtext);
-
         }
     }
 }

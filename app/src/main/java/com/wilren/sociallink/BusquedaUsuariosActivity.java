@@ -77,11 +77,13 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
                         String id = dataSnapshot.child("id").getValue().toString();
                         String nombre = dataSnapshot.child("nombre").getValue().toString();
                         String email = dataSnapshot.child("email").getValue().toString();
+                        String fotoPerfil = dataSnapshot.child("fotoPerfil").getValue().toString();
 
                         Persona persona = new Persona();
                         persona.setEmail(email);
                         persona.setNombre(nombre);
                         persona.setId(id);
+                        persona.setFotoPerfil(fotoPerfil);
 
                         listaPersonas.add(persona);
                         adapter.notifyItemRangeInserted(0, listaContactos.size());

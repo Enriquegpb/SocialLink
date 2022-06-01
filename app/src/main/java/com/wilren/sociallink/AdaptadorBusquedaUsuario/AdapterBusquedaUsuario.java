@@ -19,6 +19,8 @@ import org.w3c.dom.Text;
 import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusquedaUsuario.AdapterBusquedaUsuarioViewHolder> {
     private ArrayList<Persona> listaPersonas;
     private Activity activity;
@@ -37,12 +39,13 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
 
     @Override
     public void onBindViewHolder(@NonNull AdapterBusquedaUsuarioViewHolder holder, int position) {
-        holder.nombre.setText(listaPersonas.get(position).getNombre());
+        Persona persona = listaPersonas.get(position);
+        holder.nombre.setText(persona.getNombre());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, Chat.class);
-                intent.putExtra("personaEnviar", listaPersonas.get(position));
+                intent.putExtra("personaEnviar", persona);
                 intent.putExtra("nuevo", true);
                 activity.startActivity(intent);
                 activity.finish();
@@ -56,11 +59,13 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
     }
 
     public class AdapterBusquedaUsuarioViewHolder extends RecyclerView.ViewHolder{
-        TextView nombre;
-        View view;
+        private TextView nombre;
+        private CircleImageView fotoPerfil;
+        private View view;
         public AdapterBusquedaUsuarioViewHolder(@NonNull View v) {
             super(v);
             nombre = v.findViewById(R.id.nombrePersona);
+            fotoPerfil = v.findViewById(R.id.fotoPerfil);
             view = v;
         }
     }
@@ -68,6 +73,5 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
     public void setFilteredList(ArrayList listaPersonasBusqueda){
         this.listaPersonas = listaPersonasBusqueda;
         notifyDataSetChanged();
-
     }
 }

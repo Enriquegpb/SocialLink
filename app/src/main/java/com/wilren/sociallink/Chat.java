@@ -1,46 +1,32 @@
 package com.wilren.sociallink;
 
-import android.app.Activity;
-import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Adaptador.AdapterChatAuth;
 import com.wilren.sociallink.Persona.Persona;
 
-import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.rxjava3.annotations.NonNull;
 
 public class Chat extends AppCompatActivity {
 
@@ -49,7 +35,7 @@ public class Chat extends AppCompatActivity {
     private final int PICK_IMAGE = 1;
     private RecyclerView rvMensajes;
     private LinearLayoutManager linearLayoutManager;
-    private TextView NameUser;
+    private TextView userName;
     private EditText etMensaje;
     private ImageButton btnSend;
     private CircleImageView perfil;
@@ -59,7 +45,7 @@ public class Chat extends AppCompatActivity {
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
     private Uri imageUri;
-    private String mensaje;
+    private String mensaje = "";
     private boolean nuevo;
 
     private void setComponents() {
@@ -136,10 +122,11 @@ public class Chat extends AppCompatActivity {
     }
 
     public void setUserDatachat() {
-        NameUser = findViewById(R.id.userNameChat);
-        NameUser.setText(persona.getNombre());
+        userName = findViewById(R.id.userNameChat);
+        userName.setText(persona.getNombre());
         perfil = findViewById(R.id.avatarUsuario);
-        if(!persona.getFotoPerfil().isEmpty()){
+
+        if(!persona.getFotoPerfil().isEmpty() && persona.getFotoPerfil().length() > 0){
             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(perfil);
         }
     }

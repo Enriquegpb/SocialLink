@@ -57,8 +57,8 @@ public class SignupTabFragment extends Fragment {
     }
 
     private void signup() {
-        String user = "persona5";//username.getText().toString().trim();
-        String mail = "persona5@gmail.com";//email.getText().toString().trim();
+        String user = "persona6";//username.getText().toString().trim();
+        String mail = "persona6@gmail.com";//email.getText().toString().trim();
         String pass = "123456";//password.getText().toString().trim();
         String repeatPass = "123456";//repeatPassword.getText().toString().trim();
         if (user.isEmpty()) {

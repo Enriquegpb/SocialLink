@@ -35,7 +35,6 @@
 
     </androidx.appcompat.widget.SearchView>
 
-
     <FrameLayout
         android:layout_width="409dp"
         android:layout_height="match_parent"

@@ -28,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05"
-        />
+        app:layout_constraintGuide_percent="0.05" />
 
 
     <EditText
@@ -40,13 +39,19 @@
         android:background="@drawable/formato_escribir_mensaje"
         android:fontFamily="@font/droidsans"
         android:hint="Mensaje ..."
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:layout_marginBottom="10dp"
-        android:padding="9dp"
+
+        android:paddingLeft="20dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/rvChat" />
+        app:layout_constraintTop_toBottomOf="@+id/rvChat"
+        android:ems="10"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
@@ -74,7 +79,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="28dp" />
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatarUsuario"
         android:layout_width="55dp"
@@ -100,20 +104,22 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
-        android:alpha="0.5"
+        android:alpha="0.8"
         android:backgroundTint="@android:color/transparent"
         android:src="@drawable/ic_send_white"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toEndOf="@+id/etMensajeChat"
-        app:layout_constraintTop_toTopOf="@+id/etMensajeChat"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/userNameChat"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:text="@string/user"
         android:paddingLeft="10dp"
         app:layout_constraintBottom_toTopOf="@+id/rvChat"

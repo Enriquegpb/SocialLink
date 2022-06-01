@@ -10,15 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/cleardarkblue"
-        >
-
+        android:background="@color/cleardarkblue">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="3dp">
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoPerfil"
                 android:layout_width="70dp"
@@ -28,7 +25,6 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/user" />
-
             <LinearLayout
                 android:id="@+id/parteEscrita"
                 android:layout_width="match_parent"
@@ -47,8 +43,7 @@
                     android:text="Nombre"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

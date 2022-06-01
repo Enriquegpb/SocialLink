@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                contactos.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     for (int i = 0; i < listaUsuarios.size(); i++) {
                         if (dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())) {
