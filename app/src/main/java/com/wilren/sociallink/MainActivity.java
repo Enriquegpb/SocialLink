@@ -81,9 +81,8 @@ public class MainActivity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent t1=new Intent();
-
                 Intent intent = new Intent(MainActivity.this, UserProfile.class);
+
                 startActivity(intent);
 
             }
