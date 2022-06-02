@@ -1,4 +1,4 @@
-package com.wilren.sociallink;
+package com.wilren.sociallink.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.wilren.sociallink.ModelChat;
 import com.wilren.sociallink.Persona.Persona;
+import com.wilren.sociallink.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SignupTabFragment extends Fragment {
 
@@ -27,6 +33,7 @@ public class SignupTabFragment extends Fragment {
     private EditText username, email, password, repeatPassword;
     private FirebaseAuth mAuth;
     private FirebaseDatabase fbdb;
+    private FirebaseFirestore db;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
@@ -38,6 +45,7 @@ public class SignupTabFragment extends Fragment {
         repeatPassword = root.findViewById(R.id.editTextRepeatPassword);
         mAuth = FirebaseAuth.getInstance();
         fbdb = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+        db = FirebaseFirestore.getInstance();
 
         bsignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +57,8 @@ public class SignupTabFragment extends Fragment {
     }
 
     private void signup() {
-        String user = "persona3";//username.getText().toString().trim();
-        String mail = "persona3@gmail.com";//email.getText().toString().trim();
+        String user = "persona6";//username.getText().toString().trim();
+        String mail = "persona6@gmail.com";//email.getText().toString().trim();
         String pass = "123456";//password.getText().toString().trim();
         String repeatPass = "123456";//repeatPassword.getText().toString().trim();
         if (user.isEmpty()) {
@@ -73,7 +81,9 @@ public class SignupTabFragment extends Fragment {
                         String id = task.getResult().getUser().getUid();
 
                         Persona persona = new Persona(id, user, mail, "");
+
                         fbdb.getReference().child("Users").child(id).setValue(persona);
+
                         fbdb.getReference().child("Contactos").child(id).setValue("");
 
                         //startActivity(new Intent(getActivity(), Chat.class));

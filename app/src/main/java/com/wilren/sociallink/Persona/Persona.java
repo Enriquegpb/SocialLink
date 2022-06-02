@@ -3,10 +3,13 @@ package com.wilren.sociallink.Persona;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Persona implements Parcelable {
 
-    public String id, nombre, email, fotoPerfil;
+    public String id, nombre, email, fotoPerfil, ultimoMensaje;
+    private CircleImageView perfil;
 
     public Persona(String id, String nombre, String email, String fotoPerfil) {
         this.id = id;
@@ -17,11 +20,13 @@ public class Persona implements Parcelable {
 
     public Persona(){}
 
+
     protected Persona(Parcel in) {
         id = in.readString();
         nombre = in.readString();
         email = in.readString();
         fotoPerfil = in.readString();
+        ultimoMensaje = in.readString();
     }
 
     public static final Creator<Persona> CREATOR = new Creator<Persona>() {
@@ -35,6 +40,22 @@ public class Persona implements Parcelable {
             return new Persona[size];
         }
     };
+
+    public CircleImageView getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(CircleImageView perfil) {
+        this.perfil = perfil;
+    }
+
+    public String getUltimoMensaje() {
+        return ultimoMensaje;
+    }
+
+    public void setUltimoMensaje(String ultimoMensaje) {
+        this.ultimoMensaje = ultimoMensaje;
+    }
 
     public String getId() {
         return id;
@@ -74,12 +95,11 @@ public class Persona implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeString(id);
-        dest.writeString(nombre);
-        dest.writeString(email);
-        dest.writeString(fotoPerfil);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(nombre);
+        parcel.writeString(email);
+        parcel.writeString(fotoPerfil);
+        parcel.writeString(ultimoMensaje);
     }
-
 }

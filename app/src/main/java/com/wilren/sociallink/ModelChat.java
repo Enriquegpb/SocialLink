@@ -3,8 +3,11 @@ package com.wilren.sociallink;
 import java.util.Date;
 
 public class ModelChat {
-    private String userid, text,uri;
+    String userid, text,uri;
+    private Date time;
 
+
+    //Este constructor no funciona remplazar por otro.
     public ModelChat(String userid, String text, String uri, Date time) {
         this.userid = userid;
         this.text = text;
@@ -15,8 +18,6 @@ public class ModelChat {
     public Date getTime() {
         return time;
     }
-
-    private Date time;
 
     public ModelChat(String userid, String text, Date time) {
         this.userid = userid;

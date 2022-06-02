@@ -4,15 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat">
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+    tools:context=".Chat"
+    android:background="@color/midarkblue"
+    android:fitsSystemWindows="true"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -23,31 +18,39 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.05" />
+
 
     <EditText
         android:id="@+id/etMensajeChat"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="36dp"
-        android:autofillHints=""
-        android:ems="10"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/formato_escribir_mensaje"
         android:fontFamily="@font/droidsans"
-        android:hint="@string/escribe_aqu_tu_mensaje"
-        android:inputType="textPersonName"
+        android:hint="Mensaje ..."
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/rvChat" />
-
+        app:layout_constraintTop_toBottomOf="@+id/rvChat"
+        android:ems="10"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/etMensajeChat"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -59,57 +62,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="28dp" />
 
-
-    <ImageButton
-        android:id="@+id/userIdChat"
-        android:layout_width="48dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatarUsuario"
+        android:layout_width="55dp"
         android:layout_height="0dp"
         android:src="@drawable/user"
-        android:scaleType="fitCenter"
-
         app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:layout_constraintVertical_bias="1.0" />
-
-    <!--<ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:backgroundTint="@color/midarkblue"
-        android:src="@drawable/ic_camera"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/rvChat"
-        app:layout_constraintTop_toTopOf="@+id/etMensajeChat" />-->
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
+        android:alpha="0.8"
         android:backgroundTint="@android:color/transparent"
         android:src="@drawable/ic_send_white"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/etMensajeChat"
+        app:layout_constraintStart_toEndOf="@+id/etMensajeChat"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/userNameChat"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:text="@string/user"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toTopOf="@+id/rvChat"
-        app:layout_constraintStart_toEndOf="@+id/userIdChat"
+        app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
