@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView searchView;
     private ArrayList<String> usuariosContactos;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
