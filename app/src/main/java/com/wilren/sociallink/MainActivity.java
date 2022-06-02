@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TextView tv;
     private RecyclerView listaMensajes;
     private AdaptadorMensaje adapter;
     private ArrayList<Persona> listaUsuarios = new ArrayList<>();
@@ -72,6 +73,19 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, BusquedaUsuariosActivity.class);
                 intent.putExtra("contactos", usuariosContactos);
                 startActivity(intent);
+            }
+        });
+
+        tv=findViewById(R.id.textView2);
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent t1=new Intent();
+
+                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                startActivity(intent);
+
             }
         });
 
