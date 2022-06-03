@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -130,9 +130,9 @@ public class UserProfile extends AppCompatActivity {
 
     private void changeUserPhoto(FirebaseUser user) {
         openGallery();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+        /*UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(et1.getText().toString())
-                .setPhotoUri(Uri.parse(String.valueOf(imageUri)))
+                //.setPhotoUri(Uri.parse(String.valueOf(imageUri)))
                 .build();
 
         user.updateProfile(profileUpdates)
@@ -152,7 +152,7 @@ public class UserProfile extends AppCompatActivity {
                             Log.d("TAG", "User email address updated.");
                         }
                     }
-                });
+                });*/
     }
 
     @Override
@@ -164,17 +164,28 @@ public class UserProfile extends AppCompatActivity {
             //imageview_account_profile.setImageURI(imageUri);
 
             StorageReference filePath = FirebaseStorage.getInstance().getReference().child("fotos").child(imageUri.getLastPathSegment());
-
-            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            UploadTask uploadTask = filePath.putFile(imageUri);
+            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    retrievePhotoProfile = Uri.parse(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-                    Glide.with(UserProfile.this)
-                            .load(retrievePhotoProfile)
-                            .fitCenter()
-                            .centerCrop()
-                            .into(imageview_account_profile);
-                    Toast.makeText(UserProfile.this, "La imagen se ha subido correctamente", Toast.LENGTH_SHORT).show();
+                public Task<Uri> then(@androidx.annotation.NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return filePath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@androidx.annotation.NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        retrievePhotoProfile = task.getResult();
+                        Glide.with(UserProfile.this)
+                                .load(retrievePhotoProfile)
+                                .fitCenter()
+                                .centerCrop()
+                                .into(imageview_account_profile);
+                        Toast.makeText(UserProfile.this, "La imagen se ha subido correctamente", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
         }
