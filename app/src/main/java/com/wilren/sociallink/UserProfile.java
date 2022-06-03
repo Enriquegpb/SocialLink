@@ -117,42 +117,10 @@ public class UserProfile extends AppCompatActivity {
                         }
                     }
                 });
-        user.updateEmail(et2.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "User email address updated.");
-                        }
-                    }
-                });
     }
 
     private void changeUserPhoto(FirebaseUser user) {
         openGallery();
-        /*UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(et1.getText().toString())
-                //.setPhotoUri(Uri.parse(String.valueOf(imageUri)))
-                .build();
-
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "User profile updated.");
-                        }
-                    }
-                });
-        user.updateEmail(et2.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "User email address updated.");
-                        }
-                    }
-                });*/
     }
 
     @Override
