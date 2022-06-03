@@ -8,34 +8,39 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageSwitcher;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
-import java.util.concurrent.TimeUnit;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.annotations.NonNull;
 
 public class UserProfile extends AppCompatActivity {
 
-    private static final int PICK_IMAGE = 0;
+    private static final int PICK_IMAGE = 1;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private EditText et1, et2,et3;
+    private EditText et1, et2, et3;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private Button button;
-    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private CircleImageView imageview_account_profile;
     private Uri imageUri;
+    private DatabaseReference refData;
+    private Uri retrievePhotoProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +56,17 @@ public class UserProfile extends AppCompatActivity {
         et3.setText(user.getEmail());
 
 
-        button=findViewById(R.id.save);
-
-        imageview_account_profile=findViewById(R.id.imageview_account_profile);
-
+        button = findViewById(R.id.save);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        refData = database.getReference("users");
+        imageview_account_profile = findViewById(R.id.imageview_account_profile);
 
         imageview_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeUserPhoto(user);
             }
+
         });
 
 
@@ -77,7 +83,6 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
-
     }
     /*private void startPhoneNumberVerification(String phoneNumber) {
         // [START start_phone_auth]
@@ -92,12 +97,12 @@ public class UserProfile extends AppCompatActivity {
         // [END start_phone_auth]
     }*/
 
-    private void openGallery(){
-        Intent gallery=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
-    private void changeUserData(FirebaseUser user){
+    private void changeUserData(FirebaseUser user) {
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(et1.getText().toString())
@@ -122,7 +127,8 @@ public class UserProfile extends AppCompatActivity {
                     }
                 });
     }
-    private void changeUserPhoto(FirebaseUser user){
+
+    private void changeUserPhoto(FirebaseUser user) {
         openGallery();
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(et1.getText().toString())
@@ -150,15 +156,27 @@ public class UserProfile extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK && (requestCode==PICK_IMAGE)){
+        if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE)) {
             imageUri = data.getData();
-            imageview_account_profile.setImageURI(imageUri);
+            //imageview_account_profile.setImageURI(imageUri);
 
+            StorageReference filePath = FirebaseStorage.getInstance().getReference().child("fotos").child(imageUri.getLastPathSegment());
 
-
+            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    retrievePhotoProfile = Uri.parse(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                    Glide.with(UserProfile.this)
+                            .load(retrievePhotoProfile)
+                            .fitCenter()
+                            .centerCrop()
+                            .into(imageview_account_profile);
+                    Toast.makeText(UserProfile.this, "La imagen se ha subido correctamente", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
