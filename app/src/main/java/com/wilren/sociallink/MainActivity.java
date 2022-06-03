@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
     private CircleImageView searchView;
     private ArrayList<String> usuariosContactos;
-
+    private Persona personaActual=new Persona();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserProfile.class);
-
+                intent.putExtra("personaActual",personaActual);
                 startActivity(intent);
 
             }
@@ -138,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
                     persona.setNombre(nombre);
                     persona.setId(id);
                     persona.setFotoPerfil(fotoPerfil);
+
+                    if(id==user.getUid()) {
+                        personaActual=persona;
+                    }
 
                     listaUsuarios.add(persona);
                 }

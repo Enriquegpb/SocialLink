@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.wilren.sociallink.Persona.Persona;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -41,11 +42,14 @@ public class UserProfile extends AppCompatActivity {
     private Uri imageUri;
     private DatabaseReference refData;
     private Uri retrievePhotoProfile;
-
+    private Persona personaActual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        personaActual=getIntent().getParcelableExtra("personaActual");
+
 
         et1 = findViewById(R.id.profileName);
         et2 = findViewById(R.id.mail);
@@ -65,8 +69,8 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeUserPhoto(user);
+                personaActual.setFotoPerfil(String.valueOf(retrievePhotoProfile));//Ahora post json del realtime
             }
-
         });
 
 
@@ -74,9 +78,9 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeUserData(user);
-                et1.setText(et1.getText());
-                et2.setText(et2.getText());
-                et3.setText(et3.getText());
+                et1.setText(et1.getText());//Este funciona que es del nombre del perfil
+                et2.setText(et2.getText());//Este sería descripción
+                et3.setText(et3.getText());//Este sería numero de cotacto
 
 
             }
