@@ -73,7 +73,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(holder.fotoPerfil);
         }
 
-//        holder.fecha.setText(listaMensajes.get(position).getFecha());
+        holder.fecha.setText(persona.getFechaUltimoMensaje());
 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +94,8 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
                 builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        borrarConversacion(listaMensajes.get(position).getId());
+                        borrarConversacion(persona.getId());
+                        borrarDatosRealTime(persona.getId());
                     }
                 });
 
@@ -142,5 +143,14 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
         Toast.makeText(activity, "conversacion borrada", Toast.LENGTH_SHORT).show();
     }
 
+
+    public void borrarDatosRealTime(String id){
+        FirebaseDatabase bbdd =  FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference fb = bbdd.getReference("Contactos");
+
+        fb.child(persona).child(id).child("fecha").setValue("");
+        fb.child(persona).child(id).child("ultimoMensaje").setValue("");
+
+    }
 
 }

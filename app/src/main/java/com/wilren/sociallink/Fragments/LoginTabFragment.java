@@ -53,8 +53,9 @@ public class LoginTabFragment extends Fragment {
     }
 
     public void login() {
-        String mail = "persona2@gmail.com";
-        String pass = "123456";
+
+        String mail = "persona6@gmail.com";//email.getText().toString();
+        String pass = "123456";//pass.getText().toString();
 
         if (mail.isEmpty()) {
             email.setError("");

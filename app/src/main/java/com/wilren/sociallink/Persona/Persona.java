@@ -8,7 +8,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Persona implements Parcelable {
 
-    public String id, nombre, email, fotoPerfil, ultimoMensaje;
+    public String id, nombre, email, fotoPerfil, ultimoMensaje, fechaUltimoMensaje;
     private CircleImageView perfil;
 
     public Persona(String id, String nombre, String email, String fotoPerfil) {
@@ -27,6 +27,7 @@ public class Persona implements Parcelable {
         email = in.readString();
         fotoPerfil = in.readString();
         ultimoMensaje = in.readString();
+        fechaUltimoMensaje = in.readString();
     }
 
     public static final Creator<Persona> CREATOR = new Creator<Persona>() {
@@ -40,6 +41,14 @@ public class Persona implements Parcelable {
             return new Persona[size];
         }
     };
+
+    public String getFechaUltimoMensaje() {
+        return fechaUltimoMensaje;
+    }
+
+    public void setFechaUltimoMensaje(String fechaUltimoMensaje) {
+        this.fechaUltimoMensaje = fechaUltimoMensaje;
+    }
 
     public CircleImageView getPerfil() {
         return perfil;
@@ -95,11 +104,12 @@ public class Persona implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(nombre);
-        parcel.writeString(email);
-        parcel.writeString(fotoPerfil);
-        parcel.writeString(ultimoMensaje);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(nombre);
+        dest.writeString(email);
+        dest.writeString(fotoPerfil);
+        dest.writeString(ultimoMensaje);
+        dest.writeString(fechaUltimoMensaje);
     }
 }

@@ -1,7 +1,5 @@
 package com.wilren.sociallink;
 
-
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,7 +43,6 @@ public class Chat extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
-    private Uri imageUri;
     private String mensaje = "";
     private boolean nuevo;
 
@@ -104,8 +102,6 @@ public class Chat extends AppCompatActivity {
         perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                changephoto(view);
-
                 Toast.makeText(Chat.this, "Futura informacion del usuario.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -184,12 +180,39 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(nuevo && mensaje.length() > 0){
+        if(mensaje.length() > 0){
+            if(mensaje.length() > 34){
+                mensaje = mensaje.substring(0, 34) + "...";
+            }
             ultimoMensaje();
+            fechaActual();
         }
+
+    }
+
+    public void fechaActual(){
+        FirebaseDatabase bbdd =  FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+
+        DatabaseReference fb = bbdd.getReference("Contactos");
+        fb.keepSynced(true);
+
+        String tiempo = AdaptadorChats.fechaUltimoMensaje();
+        fb.child(user.getUid()).child(persona.getId()).child("fecha").setValue(tiempo);
+        fb.child(persona.getId()).child(user.getUid()).child("fecha").setValue(tiempo);
     }
 
     public void ultimoMensaje(){
+        FirebaseDatabase bbdd =  FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference fb = bbdd.getReference("Contactos");
+        fb.keepSynced(true);
+
+        //Mensaje para persona actual
+        fb.child(user.getUid()).child(persona.getId()).child("ultimoMensaje").setValue(mensaje);
+        //Mensaje para persona a enviar
+        fb.child(persona.getId()).child(user.getUid()).child("ultimoMensaje").setValue(mensaje);
+    }
+
+    public void nuevoUsuario(){
         FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").
                 getReference("Contactos").
                 child(user.getUid()).

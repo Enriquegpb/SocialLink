@@ -102,7 +102,9 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
         ArrayList <Persona> personas = new ArrayList<>();
         for (Persona i:listaPersonas) {
             if(i.getNombre().toLowerCase().contains(text.toLowerCase())){
+                i.setFotoPerfil("");
                 personas.add(i);
+
             }
         }
         if(personas.isEmpty()){

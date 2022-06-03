@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView searchView;
     private ArrayList<String> usuariosContactos;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,28 +73,42 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     public void cargaUsuarios() {
         DatabaseReference data = INSTANCIA.getReference("Contactos").child(user.getUid());
         data.keepSynced(true);
+
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 contactos.clear();
+                usuariosContactos.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String key = dataSnapshot.getKey();
                     for (int i = 0; i < listaUsuarios.size(); i++) {
-                        if (dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())) {
+                        if (key.equals(listaUsuarios.get(i).getId())) {
                             Persona persona = listaUsuarios.get(i);
                             if (!contactos.contains(persona)) {
+                                if(dataSnapshot.hasChild("fecha")){
+                                    persona.setFechaUltimoMensaje(dataSnapshot.child("fecha").getValue().toString());
+                                }else {
+                                    persona.setFechaUltimoMensaje("");
+                                }
+                                if(dataSnapshot.hasChild("ultimoMensaje")){
+                                    persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
+                                }else{
+                                    persona.setUltimoMensaje("");
+                                }
+
                                 usuariosContactos.add(persona.getId());
                                 contactos.add(persona);
-                                adapter.notifyItemRangeInserted(0, contactos.size());
                             }
                         }
                     }
                 }
+                adapter.notifyItemRangeInserted(0, contactos.size());
+                adapter.notifyDataSetChanged();
                 listaMensajes.setAdapter(adapter);
             }
 
@@ -135,24 +148,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    public Persona propiedadesMensaje(Persona persona) {
-        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-
-        Query query = rootRef.collection("chat")
-                .document(user.getUid()).collection(persona.getId())
-                .orderBy("time", Query.Direction.ASCENDING)
-                .limit(1);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    persona.setUltimoMensaje(task.getResult().getDocuments().get(0).get("text").toString());
-                }
-            }
-        });
-
-        return persona;
-    }
-
 }
