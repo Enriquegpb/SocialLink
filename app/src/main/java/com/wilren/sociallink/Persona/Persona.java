@@ -8,7 +8,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Persona implements Parcelable {
 
-    public String id, nombre, email, fotoPerfil, ultimoMensaje;
+    public String id, nombre, email, fotoPerfil, ultimoMensaje,description;
+    private int phoneNumber;
     private CircleImageView perfil;
 
     public Persona(String id, String nombre, String email, String fotoPerfil) {
@@ -27,6 +28,8 @@ public class Persona implements Parcelable {
         email = in.readString();
         fotoPerfil = in.readString();
         ultimoMensaje = in.readString();
+        description=in.readString();
+        phoneNumber=in.readInt();
     }
 
     public static final Creator<Persona> CREATOR = new Creator<Persona>() {
@@ -101,5 +104,7 @@ public class Persona implements Parcelable {
         parcel.writeString(email);
         parcel.writeString(fotoPerfil);
         parcel.writeString(ultimoMensaje);
+        parcel.writeString(description);
+        parcel.writeString(String.valueOf(phoneNumber));
     }
 }
