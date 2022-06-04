@@ -10,7 +10,6 @@ public class Persona implements Parcelable {
 
     public String id, nombre, email, fotoPerfil, ultimoMensaje,description;
     private int phoneNumber;
-    private CircleImageView perfil;
 
     public Persona(String id, String nombre, String email, String fotoPerfil) {
         this.id = id;
@@ -44,13 +43,7 @@ public class Persona implements Parcelable {
         }
     };
 
-    public CircleImageView getPerfil() {
-        return perfil;
-    }
 
-    public void setPerfil(CircleImageView perfil) {
-        this.perfil = perfil;
-    }
 
     public String getUltimoMensaje() {
         return ultimoMensaje;

@@ -136,55 +136,6 @@ public class Chat extends AppCompatActivity {
         }
     }
 
-
-//    //hasta aqui
-//    public void changephoto(View view) {
-//
-//        openGallery();
-//
-//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                .setPhotoUri(Uri.parse(String.valueOf(imageUri)))
-//                .build();
-//
-//        user.updateProfile(profileUpdates)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d("TAG", "User profile updated.");
-//                        }
-//                    }
-//                });
-//        AdaptadorChats.notifyDataSetChanged();
-//    }
-//
-//    private void openGallery() {
-//        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//        startActivityForResult(gallery, PICK_IMAGE);
-//    }
-//
-//    private void openCamera() {
-//        File fotoFile = new File(getApplicationContext().getFilesDir(), "fotoPerfil");
-//        String pathFotoFile = fotoFile.getAbsolutePath();
-//        Uri fotoUri = Uri.fromFile(fotoFile);
-//        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (camera.resolveActivity(getPackageManager()) != null) {
-//            camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
-//            startActivityForResult(camera, RESP_TOMAR_FOTO);
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE || requestCode == RESP_TOMAR_FOTO)) {
-//            imageUri = data.getData();
-//            //imgPerfil_newuser_class.setImageURI(imageUri);
-//            //imgPerfil_toolbar_class.setImageURI(imageUri);
-//        }
-//    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

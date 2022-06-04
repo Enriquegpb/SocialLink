@@ -1,6 +1,5 @@
 package com.wilren.sociallink.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wilren.sociallink.ModelChat;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SignupTabFragment extends Fragment {
 
@@ -57,8 +50,8 @@ public class SignupTabFragment extends Fragment {
     }
 
     private void signup() {
-        String user = "persona6";//username.getText().toString().trim();
-        String mail = "persona6@gmail.com";//email.getText().toString().trim();
+        String user = "persona7";//username.getText().toString().trim();
+        String mail = "persona7@gmail.com";//email.getText().toString().trim();
         String pass = "123456";//password.getText().toString().trim();
         String repeatPass = "123456";//repeatPassword.getText().toString().trim();
         if (user.isEmpty()) {
