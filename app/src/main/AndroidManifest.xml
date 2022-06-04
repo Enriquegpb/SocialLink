@@ -16,18 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chat">
         <activity
+            android:name=".UserContactProfile"
+            android:exported="false" />
+        <activity
             android:name=".UserProfile"
             android:exported="true" />
         <activity
             android:name=".Login"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Chat"
             android:exported="true" />
         <activity
             android:name=".Splash"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

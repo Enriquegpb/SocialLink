@@ -1,6 +1,7 @@
 package com.wilren.sociallink;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Adaptador.AdapterChatAuth;
 import com.wilren.sociallink.Persona.Persona;
@@ -105,7 +107,9 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                changephoto(view);
-
+                Intent intent = new Intent(Chat.this, UserContactProfile.class);
+                intent.putExtra("personaActual",persona);
+                startActivity(intent);
                 Toast.makeText(Chat.this, "Futura informacion del usuario.", Toast.LENGTH_SHORT).show();
             }
         });

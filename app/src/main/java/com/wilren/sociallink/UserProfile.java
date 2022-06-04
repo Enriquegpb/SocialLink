@@ -57,7 +57,7 @@ public class UserProfile extends AppCompatActivity {
 
 
         et1 = findViewById(R.id.profileName);
-        et2 = findViewById(R.id.mail);
+        et2 = findViewById(R.id.description);
         et3 = findViewById(R.id.Movile);
 
         et1.setText(user.getDisplayName());
