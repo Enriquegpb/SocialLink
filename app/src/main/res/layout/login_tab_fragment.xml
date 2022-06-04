@@ -75,7 +75,7 @@
         android:id="@+id/blogin"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="72dp"
         android:hint="Iniciar Sesión"
         android:textColorHint="@color/white"
         android:text="@string/login"

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class UserProfile extends AppCompatActivity {
     private DatabaseReference refData;
     private Uri retrievePhotoProfile;
     private Persona personaActual;
+    private TextView description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +52,18 @@ public class UserProfile extends AppCompatActivity {
 
         personaActual=getIntent().getParcelableExtra("personaActual");
 
+        description=findViewById(R.id.descripcion);
+
+
 
         et1 = findViewById(R.id.profileName);
         et2 = findViewById(R.id.mail);
         et3 = findViewById(R.id.Movile);
 
         et1.setText(user.getDisplayName());
-        et2.setText(user.getEmail());
+        et2.setText("");
         et3.setText(user.getEmail());
+
 
 
         button = findViewById(R.id.save);
@@ -82,6 +88,7 @@ public class UserProfile extends AppCompatActivity {
                 et2.setText(et2.getText());//Este sería descripción
                 et3.setText(et3.getText());//Este sería numero de cotacto
 
+                description.setText(et2.getText());
 
             }
         });
