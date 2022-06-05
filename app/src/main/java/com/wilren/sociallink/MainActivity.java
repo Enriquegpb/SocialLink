@@ -139,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
                     persona.setId(id);
                     persona.setFotoPerfil(fotoPerfil);
 
-                    if(id==user.getUid()) {
+                    if(user.getUid().equals(id)) {
                         personaActual=persona;
+                        Toast.makeText(MainActivity.this, id, Toast.LENGTH_SHORT).show();
                     }
 
                     listaUsuarios.add(persona);

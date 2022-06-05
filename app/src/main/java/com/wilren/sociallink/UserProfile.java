@@ -47,7 +47,6 @@ public class UserProfile extends AppCompatActivity {
     private Uri imageUri;
     private Uri retrievePhotoProfile;
     private Persona personaActual;
-
     private DatabaseReference databaseReference;
 
 
@@ -57,7 +56,9 @@ public class UserProfile extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         setContentView(R.layout.activity_user_profile);
-        //personaActual = getIntent().getParcelableExtra("personaActual");
+        personaActual = getIntent().getParcelableExtra("personaActual");
+
+        Toast.makeText(this, personaActual.getNombre(), Toast.LENGTH_SHORT).show();
 
 
         et1 = findViewById(R.id.profileName);
@@ -65,10 +66,9 @@ public class UserProfile extends AppCompatActivity {
         et3 = findViewById(R.id.Movile);
 
         et1.setText(user.getDisplayName());
-        et2.setText("");
+        et2.setText(personaActual.getNombre());
         et3.setText(user.getEmail());
-       /* if (personaActual.getFotoPerfil() != null)
-            imageview_account_profile.setImageURI(Uri.parse(personaActual.getFotoPerfil()));*/
+
 
 
         button = findViewById(R.id.save);
@@ -82,6 +82,15 @@ public class UserProfile extends AppCompatActivity {
 
             }
         });
+
+        if (personaActual.getFotoPerfil() != null){
+            Glide.with(UserProfile.this)
+                    .load(personaActual.getFotoPerfil())
+                    .fitCenter()
+                    .centerCrop()
+                    .into(imageview_account_profile);
+        }
+
 
 
         button.setOnClickListener(new View.OnClickListener() {
