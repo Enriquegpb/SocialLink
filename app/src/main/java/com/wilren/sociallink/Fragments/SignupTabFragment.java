@@ -50,8 +50,8 @@ public class SignupTabFragment extends Fragment {
     }
 
     private void signup() {
-        String user = "persona7";//username.getText().toString().trim();
-        String mail = "persona7@gmail.com";//email.getText().toString().trim();
+        String user = "persona6";//username.getText().toString().trim();
+        String mail = "persona6@gmail.com";//email.getText().toString().trim();
         String pass = "123456";//password.getText().toString().trim();
         String repeatPass = "123456";//repeatPassword.getText().toString().trim();
         if (user.isEmpty()) {
@@ -73,7 +73,7 @@ public class SignupTabFragment extends Fragment {
                         Toast.makeText(getActivity(), "Successfully registered", Toast.LENGTH_SHORT).show();
                         String id = task.getResult().getUser().getUid();
 
-                        Persona persona = new Persona(id, user, mail, "");
+                        Persona persona = new Persona(id, user, mail, "","",0);
 
                         fbdb.getReference().child("Users").child(id).setValue(persona);
 

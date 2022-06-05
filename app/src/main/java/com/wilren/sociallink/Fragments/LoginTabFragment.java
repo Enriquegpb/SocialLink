@@ -53,7 +53,7 @@ public class LoginTabFragment extends Fragment {
     }
 
     public void login() {
-        String mail = "persona7@gmail.com";
+        String mail = "persona6@gmail.com";
         String pass = "123456";
 
         if (mail.isEmpty()) {
@@ -75,10 +75,6 @@ public class LoginTabFragment extends Fragment {
             });
         }
 
-    }
-
-    private String nombreUsuario(String mail) {
-        return mail.substring(0, 8);
     }
 
 }

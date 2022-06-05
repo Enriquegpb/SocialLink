@@ -1,13 +1,18 @@
 package com.wilren.sociallink;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,17 +27,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,13 +48,39 @@ public class MainActivity extends AppCompatActivity {
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
     private CircleImageView searchView;
     private ArrayList<String> usuariosContactos;
-    private Persona personaActual=new Persona();
+    private Persona personaActual = new Persona();
+    ActivityResultLauncher<Intent> my_ActivityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         INSTANCIA.setPersistenceEnabled(true);
+
+        my_ActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            //Acciones cuando va ok
+                            Intent my_itent_vuelta = result.getData();
+                            personaActual = my_itent_vuelta.getParcelableExtra("persona_return");
+                            Context context = getApplicationContext();
+                            int duration = Toast.LENGTH_LONG;
+                            Toast toast = Toast.makeText(context, "persona devuelta", duration);
+                            toast.show();
+                        } else if (result.getResultCode() == RESULT_OK) {
+                            //Acciones si falla
+                            String mensaje_vuelta = "No se ha conseguido recuperar el usuario";
+                            Context context = getApplicationContext();
+                            int durtion = Toast.LENGTH_LONG;
+                            Toast toast = Toast.makeText(context, mensaje_vuelta, durtion);
+                            toast.show();
+                        }
+                    }
+                }
+        );
 
         recuperarUsuarios();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -76,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tv=findViewById(R.id.textView2);
+        tv = findViewById(R.id.textView2);
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserProfile.class);
-                intent.putExtra("personaActual",personaActual);
+                intent.putExtra("personaActual", personaActual);
                 startActivity(intent);
 
             }
@@ -139,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
                     persona.setId(id);
                     persona.setFotoPerfil(fotoPerfil);
 
-                    if(user.getUid().equals(id)) {
-                        personaActual=persona;
+                    if (user.getUid().equals(id)) {
+                        personaActual = persona;
                         Toast.makeText(MainActivity.this, id, Toast.LENGTH_SHORT).show();
                     }
 
@@ -172,5 +199,6 @@ public class MainActivity extends AppCompatActivity {
 
         return persona;
     }
+
 
 }

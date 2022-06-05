@@ -7,9 +7,34 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Persona implements Parcelable {
+    public Persona(String id, String nombre, String email, String fotoPerfil, String description, int phoneNumber) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.fotoPerfil = fotoPerfil;
+        this.ultimoMensaje = ultimoMensaje;
+        this.description = description;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String id, nombre, email, fotoPerfil, ultimoMensaje,description;
     private int phoneNumber;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public Persona(String id, String nombre, String email, String fotoPerfil) {
         this.id = id;

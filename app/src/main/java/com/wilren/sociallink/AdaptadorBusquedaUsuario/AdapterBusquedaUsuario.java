@@ -15,9 +15,6 @@ import com.wilren.sociallink.Chat;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
 
-import org.w3c.dom.Text;
-
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,7 +23,7 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
     private ArrayList<Persona> listaPersonas;
     private Activity activity;
 
-    public AdapterBusquedaUsuario(ArrayList listaPersonas, Activity activity){
+    public AdapterBusquedaUsuario(ArrayList listaPersonas, Activity activity) {
         this.listaPersonas = listaPersonas;
         this.activity = activity;
     }
@@ -53,7 +50,7 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
             }
         });
 
-        if(!persona.getFotoPerfil().isEmpty()){
+        if (!persona.getFotoPerfil().isEmpty()) {
             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(holder.fotoPerfil);
         }
 
@@ -64,10 +61,11 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
         return listaPersonas.size();
     }
 
-    public class AdapterBusquedaUsuarioViewHolder extends RecyclerView.ViewHolder{
+    public class AdapterBusquedaUsuarioViewHolder extends RecyclerView.ViewHolder {
         private TextView nombre;
         private CircleImageView fotoPerfil;
         private View view;
+
         public AdapterBusquedaUsuarioViewHolder(@NonNull View v) {
             super(v);
             nombre = v.findViewById(R.id.nombrePersona);
@@ -76,7 +74,7 @@ public class AdapterBusquedaUsuario extends RecyclerView.Adapter<AdapterBusqueda
         }
     }
 
-    public void setFilteredList(ArrayList listaPersonasBusqueda){
+    public void setFilteredList(ArrayList listaPersonasBusqueda) {
         this.listaPersonas = listaPersonasBusqueda;
         notifyDataSetChanged();
     }

@@ -10,26 +10,24 @@
         android:id="@+id/til1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
         app:layout_constraintStart_toStartOf="@id/leftguide"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".34"
-        android:textColorHint="@color/midarkblue"
-        android:background="@drawable/propiedades_edit_text"
-        >
+        app:layout_constraintVertical_bias=".34">
 
         <EditText
             android:id="@+id/editTextTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="userid"
-            android:hint="Username"
             android:layout_marginLeft="10dp"
-            android:inputType="textPersonName"
-            android:padding="8dp"
+            android:autofillHints="userid"
             android:background="@android:color/transparent"
-            />
+            android:hint="Username"
+            android:inputType="textPersonName"
+            android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,25 +36,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
         app:layout_constraintStart_toStartOf="@id/leftguide"
-        app:layout_constraintTop_toBottomOf="@+id/til1"
-        android:textColorHint="@color/midarkblue"
-        android:background="@drawable/propiedades_edit_text"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/til1">
 
         <EditText
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:autofillHints="password"
-            android:hint="Password"
-            android:layout_marginLeft="10dp"
-            android:padding="8dp"
-            android:inputType="textPassword"
             android:background="@android:color/transparent"
-            />
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,11 +72,11 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginBottom="72dp"
-        android:hint="Iniciar Sesión"
-        android:textColorHint="@color/white"
-        android:text="@string/login"
-        android:textSize="20sp"
         android:background="@drawable/formato_escribir_mensaje"
+        android:hint="Iniciar Sesión"
+        android:text="@string/login"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/rightguide"

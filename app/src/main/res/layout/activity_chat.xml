@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat"
     android:background="@color/midarkblue"
     android:fitsSystemWindows="true"
-    >
+    tools:context=".Chat">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -28,22 +27,21 @@
         android:id="@+id/etMensajeChat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:autoSizeTextType="uniform"
         android:background="@drawable/formato_escribir_mensaje"
+        android:ems="10"
         android:fontFamily="@font/droidsans"
         android:hint="Mensaje ..."
         android:inputType="textMultiLine"
-        android:layout_marginBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:paddingRight="8dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/rvChat"
-        android:ems="10"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/rvChat" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
@@ -86,10 +84,10 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
         android:alpha="0.8"
         android:backgroundTint="@android:color/transparent"
         android:src="@drawable/ic_send_white"
-        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toEndOf="@+id/etMensajeChat"
@@ -100,10 +98,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingLeft="10dp"
+        android:text="@string/user"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:text="@string/user"
-        android:paddingLeft="10dp"
         app:layout_constraintBottom_toTopOf="@+id/rvChat"
         app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />

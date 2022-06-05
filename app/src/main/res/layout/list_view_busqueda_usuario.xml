@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mensajes"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/cleardarkblue">
+        android:background="@color/cleardarkblue"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="3dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoPerfil"
                 android:layout_width="70dp"
@@ -25,17 +25,19 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/user" />
+
             <LinearLayout
                 android:id="@+id/parteEscrita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="13dp"
                 android:layout_toEndOf="@+id/fotoPerfil"
-                android:orientation="vertical"
-                android:layout_marginLeft="4dp"
-                android:layout_toRightOf="@id/fotoPerfil">
+                android:layout_toRightOf="@id/fotoPerfil"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/nombrePersona"
                     android:layout_width="match_parent"

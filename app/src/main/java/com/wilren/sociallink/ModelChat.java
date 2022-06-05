@@ -3,7 +3,7 @@ package com.wilren.sociallink;
 import java.util.Date;
 
 public class ModelChat {
-    String userid, text,uri;
+    String userid, text, uri;
     private Date time;
 
 
@@ -45,7 +45,6 @@ public class ModelChat {
     public void setText(String text) {
         this.text = text;
     }
-
 
 
     public void setTime(Date time) {
