@@ -45,22 +45,19 @@ public class UserProfile extends AppCompatActivity {
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private CircleImageView imageview_account_profile;
     private Uri imageUri;
-    private DatabaseReference refData;
     private Uri retrievePhotoProfile;
     private Persona personaActual;
-    //private TextView description;
+
     private DatabaseReference databaseReference;
 
-    //private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //INSTANCIA.setPersistenceEnabled(true);
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         setContentView(R.layout.activity_user_profile);
         //personaActual = getIntent().getParcelableExtra("personaActual");
-
-        //description = findViewById(R.id.descripcion);
 
 
         et1 = findViewById(R.id.profileName);
@@ -75,8 +72,7 @@ public class UserProfile extends AppCompatActivity {
 
 
         button = findViewById(R.id.save);
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //refData = database.getReference("users");
+
         imageview_account_profile = findViewById(R.id.imageview_account_profile);
 
         imageview_account_profile.setOnClickListener(new View.OnClickListener() {
@@ -92,18 +88,28 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeUserData(user);
-                et1.setText(et1.getText());//Este funciona que es del nombre del perfil
-                et2.setText(et2.getText());//Este sería descripción
-                et3.setText(et3.getText());//Este sería numero de cotacto
-                //description.setText(et2.getText());
+                et1.setText(et1.getText());
+                et2.setText(et2.getText());
+                et3.setText(et3.getText());
+
 
                 Map<String, Object> personaMap = new HashMap<>();
                 personaMap.put("nombre", user.getDisplayName());
                 personaMap.put("descripcion", et2.getText().toString());
-                personaMap.put("numero", et3.getText().toString());
-
-                databaseReference.child("Users").child(user.getUid()).updateChildren(personaMap);
-
+                personaMap.put("numeroTelefono", et3.getText().toString());
+                Toast.makeText(UserProfile.this, "xdxdxd", Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                        .child(user.getUid()).updateChildren(personaMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(UserProfile.this, "true", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@androidx.annotation.NonNull Exception e) {
+                        Toast.makeText(UserProfile.this, "true", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -132,7 +138,7 @@ public class UserProfile extends AppCompatActivity {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(et1.getText().toString())
                 .build();
-        //personaActual.setNombre(et1.getText().toString());
+
 
         user.updateProfile(profileUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -156,7 +162,7 @@ public class UserProfile extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE)) {
             imageUri = data.getData();
-            //imageview_account_profile.setImageURI(imageUri);
+
 
             StorageReference filePath = FirebaseStorage.getInstance().getReference().child("fotos").child(imageUri.getLastPathSegment());
             UploadTask uploadTask = filePath.putFile(imageUri);
@@ -173,23 +179,18 @@ public class UserProfile extends AppCompatActivity {
                 public void onComplete(@androidx.annotation.NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         retrievePhotoProfile = task.getResult();
-                        //Toast.makeText(UserProfile.this, retrievePhotoProfile.toString(), Toast.LENGTH_SHORT).show();
-                        //personaActual.setFotoPerfil(String.valueOf(retrievePhotoProfile));//Ahora post json del realtime
-
-                        Map<String, Object> personaMap = new HashMap<>();
-                        //personMap.put("nombre", user.getDisplayName());
-                        //personMap.put("descripcion", et2.getText().toString());
-                        //personMap.put("numero", et3.getText().toString());
-                        personaMap.put("fotoPerfil", retrievePhotoProfile.toString());
-                        databaseReference.child("Users").child(user.getUid()).updateChildren(personaMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        Map<String, Object> personaMap2 = new HashMap<>();
+                        personaMap2.put("fotoPerfil", retrievePhotoProfile.toString());
+                        FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                                .child(user.getUid()).updateChildren(personaMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(UserProfile.this, "Los datos se han actualizado Correctamente", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserProfile.this, "true", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@androidx.annotation.NonNull Exception e) {
-                                Toast.makeText(UserProfile.this, "Hubo un error al actulizar los datos del usuario", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserProfile.this, "true", Toast.LENGTH_SHORT).show();
                             }
                         });
                         Glide.with(UserProfile.this)
