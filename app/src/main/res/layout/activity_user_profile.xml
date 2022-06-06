@@ -57,7 +57,7 @@
         android:ems="10"
         android:hint="Descripcion"
         android:inputType="textPersonName"
-        android:maxLength="190"
+        android:maxLength="120"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
