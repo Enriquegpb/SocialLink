@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wilren.sociallink.Persona.Persona;
 
+import java.text.MessageFormat;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -22,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserContactProfile extends AppCompatActivity {
 
     private Persona contacto;
-    private TextView nombre, descripcion, movil;
+    private TextView nombre, descripcion, movil, correo;
     private CircleImageView perfil;
 
     private DatabaseReference databaseReference;
@@ -31,7 +32,7 @@ public class UserContactProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_contact_profile);
-
+        correo = findViewById(R.id.correo);
         nombre = findViewById(R.id.profileName);
         descripcion = findViewById(R.id.descripcion);
         movil = findViewById(R.id.Movile);
@@ -39,8 +40,6 @@ public class UserContactProfile extends AppCompatActivity {
         contacto = getIntent().getParcelableExtra("personaActual");
         databaseReference = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
                 .child(contacto.getId());
-
-        Toast.makeText(this, contacto.getId(), Toast.LENGTH_SHORT).show();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,7 +51,7 @@ public class UserContactProfile extends AppCompatActivity {
                         contacto.setPhoneNumber(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
                         contacto.setFotoPerfil(String.valueOf(Uri.parse(Objects.requireNonNull(snapshot.child("fotoPerfil").getValue()).toString())));
                         descripcion.setText(contacto.getDescription());
-                        movil.setText(String.valueOf("Numero de contacto: "+contacto.getPhoneNumber()));
+                        movil.setText(String.valueOf("Numero de contacto: " + contacto.getPhoneNumber()));
 
 
                     } catch (NullPointerException e) {
@@ -69,11 +68,10 @@ public class UserContactProfile extends AppCompatActivity {
         });
 
 
-
-
-        nombre.setText("Nick: "+contacto.getNombre());
-        descripcion.setText("Estoy usando Social Link");
-        movil.setText("Numero de contacto: "+movil.getText());
+        nombre.setText(MessageFormat.format("Nick: {0}", contacto.getNombre()));
+        descripcion.setText(R.string.default_description);
+        movil.setText(MessageFormat.format("Numero de contacto: {0}", movil.getText()));
+        correo.setText(MessageFormat.format("Correo: {0}", contacto.getEmail()));
 
 
         if (!(contacto.getFotoPerfil() == null || contacto.getFotoPerfil().equals(""))) {
@@ -82,7 +80,7 @@ public class UserContactProfile extends AppCompatActivity {
                     .fitCenter()
                     .centerCrop()
                     .into(perfil);
-        }else{
+        } else {
             Glide.with(UserContactProfile.this)
                     .load(R.mipmap.ic_launcher)
                     .fitCenter()

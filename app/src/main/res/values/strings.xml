@@ -10,4 +10,5 @@
     <string name="guardar">Guardar</string>
     <string name="numero_de_telefono">Numero de telefono</string>
     <string name="correo">Correo</string>
+    <string name="default_description">Estoy usando Social Link</string>
 </resources>

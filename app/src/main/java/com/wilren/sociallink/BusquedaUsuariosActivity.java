@@ -16,22 +16,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.AdaptadorBusquedaUsuario.AdapterBusquedaUsuario;
 import com.wilren.sociallink.Persona.Persona;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class BusquedaUsuariosActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private AdapterBusquedaUsuario adapter;
     private RecyclerView listaBusquedaUsuario;
-    private ArrayList <Persona> listaPersonas;
+    private ArrayList<Persona> listaPersonas;
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private ArrayList <String> listaContactos;
+    private ArrayList<String> listaContactos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +52,7 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 listarUsuarios(newText);
@@ -73,7 +72,7 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if(!listaContactos.contains(dataSnapshot.getKey())) {
+                    if (!listaContactos.contains(dataSnapshot.getKey())) {
                         String id = dataSnapshot.child("id").getValue().toString();
                         String nombre = dataSnapshot.child("nombre").getValue().toString();
                         String email = dataSnapshot.child("email").getValue().toString();
@@ -91,6 +90,7 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
                 }
                 listaBusquedaUsuario.setAdapter(adapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -98,16 +98,16 @@ public class BusquedaUsuariosActivity extends AppCompatActivity {
         });
     }
 
-    private void listarUsuarios(String text){
-        ArrayList <Persona> personas = new ArrayList<>();
-        for (Persona i:listaPersonas) {
-            if(i.getNombre().toLowerCase().contains(text.toLowerCase())){
+    private void listarUsuarios(String text) {
+        ArrayList<Persona> personas = new ArrayList<>();
+        for (Persona i : listaPersonas) {
+            if (i.getNombre().toLowerCase().contains(text.toLowerCase())) {
                 personas.add(i);
             }
         }
-        if(personas.isEmpty()){
+        if (personas.isEmpty()) {
             Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             adapter.setFilteredList(personas);
         }
     }

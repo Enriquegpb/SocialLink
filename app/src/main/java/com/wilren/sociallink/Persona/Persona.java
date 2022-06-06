@@ -3,8 +3,6 @@ package com.wilren.sociallink.Persona;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class Persona implements Parcelable {
     public Persona(String id, String nombre, String email, String fotoPerfil, String description, int phoneNumber) {
@@ -17,7 +15,7 @@ public class Persona implements Parcelable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String id, nombre, email, fotoPerfil, ultimoMensaje,description;
+    public String id, nombre, email, fotoPerfil, ultimoMensaje, description;
     private int phoneNumber;
 
     public String getDescription() {
@@ -43,7 +41,8 @@ public class Persona implements Parcelable {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public Persona(){}
+    public Persona() {
+    }
 
 
     protected Persona(Parcel in) {
@@ -52,8 +51,8 @@ public class Persona implements Parcelable {
         email = in.readString();
         fotoPerfil = in.readString();
         ultimoMensaje = in.readString();
-        description=in.readString();
-        phoneNumber=in.readInt();
+        description = in.readString();
+        phoneNumber = in.readInt();
     }
 
     public static final Creator<Persona> CREATOR = new Creator<Persona>() {
@@ -67,7 +66,6 @@ public class Persona implements Parcelable {
             return new Persona[size];
         }
     };
-
 
 
     public String getUltimoMensaje() {
