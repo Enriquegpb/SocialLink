@@ -27,6 +27,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
@@ -44,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Persona> contactos;
     private FirebaseUser user;
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
-    private CircleImageView searchView;
+    private CircleImageView searchView, usuarioActual;
     private ArrayList<String> usuariosContactos;
-
+    private Persona personaActual = new Persona();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         listaMensajes = findViewById(R.id.listaMensajes);
         searchView = findViewById(R.id.busquedaUsuarios);
+        usuarioActual = findViewById(R.id.usuarioActual);
 
         contactos = new ArrayList<>();
         usuariosContactos = new ArrayList<>();
@@ -75,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        usuarioActual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                intent.putExtra("personaActual", personaActual);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public void cargaUsuarios() {
@@ -89,6 +101,17 @@ public class MainActivity extends AppCompatActivity {
                         if (dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())) {
                             Persona persona = listaUsuarios.get(i);
                             if (!contactos.contains(persona)) {
+                                if(dataSnapshot.hasChild("fecha")){
+                                    persona.setFechaUltimoMensaje(dataSnapshot.child("fecha").getValue().toString());
+                                }else {
+                                    persona.setFechaUltimoMensaje("");
+                                }
+                                if(dataSnapshot.hasChild("ultimoMensaje")){
+                                    persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
+                                }else{
+                                    persona.setUltimoMensaje("");
+                                }
+
                                 usuariosContactos.add(persona.getId());
                                 contactos.add(persona);
                                 adapter.notifyItemRangeInserted(0, contactos.size());
@@ -96,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                adapter.notifyItemRangeInserted(0, contactos.size());
+                adapter.notifyDataSetChanged();
                 listaMensajes.setAdapter(adapter);
             }
 
@@ -113,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                listaUsuarios.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String id = dataSnapshot.child("id").getValue().toString();
                     String nombre = dataSnapshot.child("nombre").getValue().toString();
@@ -126,6 +151,21 @@ public class MainActivity extends AppCompatActivity {
                     persona.setId(id);
                     persona.setFotoPerfil(fotoPerfil);
 
+                    if(dataSnapshot.hasChild("numeroTelefono")){
+                        int numeroTelefono = Integer.parseInt(dataSnapshot.child("numeroTelefono").getValue().toString());
+                        persona.setPhoneNumber(numeroTelefono);
+                    }else{
+                        persona.setPhoneNumber(0);
+                    }
+
+
+                    if (user.getUid().equals(id)){
+                        personaActual = persona;
+                        if(!fotoPerfil.isEmpty()){
+                            Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(usuarioActual);
+                        }
+                    }
+
                     listaUsuarios.add(persona);
                 }
             }
@@ -134,25 +174,6 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
-
-    public Persona propiedadesMensaje(Persona persona) {
-        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-
-        Query query = rootRef.collection("chat")
-                .document(user.getUid()).collection(persona.getId())
-                .orderBy("time", Query.Direction.ASCENDING)
-                .limit(1);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    persona.setUltimoMensaje(task.getResult().getDocuments().get(0).get("text").toString());
-                }
-            }
-        });
-
-        return persona;
     }
 
 }

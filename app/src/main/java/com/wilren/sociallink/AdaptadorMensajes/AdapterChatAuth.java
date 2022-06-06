@@ -18,6 +18,8 @@ import com.wilren.sociallink.R;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.Date;
+
 public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, AdapterChatAuth.MessengeHolder> {
     private static final int M_R = 0;
     private static final int M_I = 1;

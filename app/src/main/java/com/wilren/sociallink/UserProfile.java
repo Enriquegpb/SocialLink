@@ -60,7 +60,6 @@ public class UserProfile extends AppCompatActivity {
 
         et1.setText(user.getDisplayName());
 
-
         personaActual = getIntent().getParcelableExtra("personaActual");
 
         FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
@@ -95,8 +94,6 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeUserPhoto(user);
-
-
             }
         });
 

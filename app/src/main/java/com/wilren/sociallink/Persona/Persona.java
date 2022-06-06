@@ -8,15 +8,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Persona implements Parcelable {
 
-    public String id, nombre, email, fotoPerfil, ultimoMensaje;
-    private CircleImageView perfil;
 
-    public Persona(String id, String nombre, String email, String fotoPerfil) {
+    public String id, nombre, email, fotoPerfil, ultimoMensaje, description, fechaUltimoMensaje;
+    private int phoneNumber;
+
+
+    public Persona(String id, String nombre, String email, String fotoPerfil, String description, int phoneNumber) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.fotoPerfil = fotoPerfil;
+        this.description = description;
+        this.phoneNumber = phoneNumber;
     }
+
 
     public Persona(){}
 
@@ -27,6 +32,9 @@ public class Persona implements Parcelable {
         email = in.readString();
         fotoPerfil = in.readString();
         ultimoMensaje = in.readString();
+        description = in.readString();
+        fechaUltimoMensaje = in.readString();
+        phoneNumber = in.readInt();
     }
 
     public static final Creator<Persona> CREATOR = new Creator<Persona>() {
@@ -41,13 +49,30 @@ public class Persona implements Parcelable {
         }
     };
 
-    public CircleImageView getPerfil() {
-        return perfil;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPerfil(CircleImageView perfil) {
-        this.perfil = perfil;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFechaUltimoMensaje() {
+        return fechaUltimoMensaje;
+    }
+
+    public void setFechaUltimoMensaje(String fechaUltimoMensaje) {
+        this.fechaUltimoMensaje = fechaUltimoMensaje;
+    }
+
 
     public String getUltimoMensaje() {
         return ultimoMensaje;
@@ -89,17 +114,21 @@ public class Persona implements Parcelable {
         this.fotoPerfil = fotoPerfil;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(nombre);
-        parcel.writeString(email);
-        parcel.writeString(fotoPerfil);
-        parcel.writeString(ultimoMensaje);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(nombre);
+        dest.writeString(email);
+        dest.writeString(fotoPerfil);
+        dest.writeString(ultimoMensaje);
+        dest.writeString(description);
+        dest.writeString(fechaUltimoMensaje);
+        dest.writeInt(phoneNumber);
     }
 }

@@ -73,7 +73,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(holder.fotoPerfil);
         }
 
-//        holder.fecha.setText(listaMensajes.get(position).getFecha());
+        holder.fecha.setText(persona.getFechaUltimoMensaje());
 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
