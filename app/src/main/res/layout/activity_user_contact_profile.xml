@@ -53,8 +53,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-
-        android:maxLength="190"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -65,12 +63,10 @@
 
     <TextView
         android:id="@+id/correo"
-        android:layout_width="347dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-
         android:ems="10"
-        android:maxLength="190"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
