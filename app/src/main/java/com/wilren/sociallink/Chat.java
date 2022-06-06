@@ -109,7 +109,7 @@ public class Chat extends AppCompatActivity {
                 Intent intent = new Intent(Chat.this, UserContactProfile.class);
                 intent.putExtra("personaActual", persona);
                 startActivity(intent);
-                Toast.makeText(Chat.this, "Futura informacion del usuario.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Chat.this, "Futura informacion del usuario.", Toast.LENGTH_SHORT).show();
             }
         });
     }

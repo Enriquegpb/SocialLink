@@ -52,7 +52,8 @@ public class UserContactProfile extends AppCompatActivity {
                         contacto.setPhoneNumber(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
                         contacto.setFotoPerfil(String.valueOf(Uri.parse(Objects.requireNonNull(snapshot.child("fotoPerfil").getValue()).toString())));
                         descripcion.setText(contacto.getDescription());
-                        movil.setText(String.valueOf(contacto.getPhoneNumber()));
+                        movil.setText(String.valueOf("Numero de contacto: "+contacto.getPhoneNumber()));
+
 
                     } catch (NullPointerException e) {
                         Toast.makeText(UserContactProfile.this, "Los datos de su contacto no están disponibles", Toast.LENGTH_SHORT).show();
@@ -70,12 +71,20 @@ public class UserContactProfile extends AppCompatActivity {
 
 
 
-        nombre.setText(contacto.getNombre());
+        nombre.setText("Nick: "+contacto.getNombre());
+        descripcion.setText("Estoy usando Social Link");
+        movil.setText("Numero de contacto: "+movil.getText());
 
 
-        if (contacto.getFotoPerfil() != null) {
-            Glide.with(this)
+        if (!(contacto.getFotoPerfil() == null || contacto.getFotoPerfil().equals(""))) {
+            Glide.with(UserContactProfile.this)
                     .load(contacto.getFotoPerfil())
+                    .fitCenter()
+                    .centerCrop()
+                    .into(perfil);
+        }else{
+            Glide.with(UserContactProfile.this)
+                    .load(R.mipmap.ic_launcher)
                     .fitCenter()
                     .centerCrop()
                     .into(perfil);

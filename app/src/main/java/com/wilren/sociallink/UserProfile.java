@@ -89,7 +89,6 @@ public class UserProfile extends AppCompatActivity {
 
 
         button = findViewById(R.id.save);
-
         imageview_account_profile = findViewById(R.id.imageview_account_profile);
 
         imageview_account_profile.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +100,15 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-        if (personaActual.getFotoPerfil() != null) {
+        if (!(personaActual.getFotoPerfil() == null || personaActual.getFotoPerfil().equals(""))) {
             Glide.with(UserProfile.this)
                     .load(personaActual.getFotoPerfil())
+                    .fitCenter()
+                    .centerCrop()
+                    .into(imageview_account_profile);
+        }else{
+            Glide.with(UserProfile.this)
+                    .load(R.mipmap.ic_launcher)
                     .fitCenter()
                     .centerCrop()
                     .into(imageview_account_profile);
@@ -120,7 +125,10 @@ public class UserProfile extends AppCompatActivity {
 
 
                 Map<String, Object> personaMap = new HashMap<>();
+                if(user.getDisplayName().length()>0)
                 personaMap.put("nombre", user.getDisplayName());
+                else
+                    personaMap.put("nombre","");
                 personaMap.put("descripcion", et2.getText().toString());
                 personaMap.put("numeroTelefono", et3.getText().toString());
                 FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
@@ -147,21 +155,22 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void changeUserData(FirebaseUser user) {
+        if (et1.getText().length() > 0) {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(et1.getText().toString())
+                    .build();
 
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(et1.getText().toString())
-                .build();
 
-
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "User profile updated.");
+            user.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("TAG", "User profile updated.");
+                            }
                         }
-                    }
-                });
+                    });
+        }
 
     }
 
