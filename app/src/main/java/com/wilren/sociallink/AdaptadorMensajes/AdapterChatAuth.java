@@ -18,8 +18,6 @@ import com.wilren.sociallink.R;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.util.Date;
-
 public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, AdapterChatAuth.MessengeHolder> {
     private static final int M_R = 0;
     private static final int M_I = 1;
@@ -85,6 +83,7 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
 
     public class MessengeHolder extends RecyclerView.ViewHolder {
         private final TextView timeTv, textTv;
+
         public MessengeHolder(@NonNull View itemView) {
             super(itemView);
             timeTv = itemView.findViewById(R.id.idtime);

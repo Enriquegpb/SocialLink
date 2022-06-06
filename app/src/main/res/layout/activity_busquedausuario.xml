@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/midarkblue"
-    >
+    android:orientation="vertical">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -39,25 +38,22 @@
         android:layout_width="409dp"
         android:layout_height="match_parent"
         android:layout_marginTop="125dp"
+        android:background="@drawable/vista_mensajes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7"
-        android:background="@drawable/vista_mensajes"
-        >
+        app:layout_constraintTop_toTopOf="@+id/guideline7">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listaBusquedaUsuarios"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="25dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingTop="25dp"
             android:paddingEnd="30dp"
+            android:paddingRight="20dp"
             app:layout_constraintTop_toTopOf="@+id/guideline7" />
     </FrameLayout>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

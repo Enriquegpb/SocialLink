@@ -8,6 +8,9 @@
         android:id="@+id/til3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
         app:layout_constraintStart_toStartOf="@id/leftguide"
@@ -18,10 +21,13 @@
             android:id="@+id/editTextTextPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:autofillHints="userid"
-
+            android:background="@android:color/transparent"
             android:hint="username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -30,6 +36,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
         app:layout_constraintStart_toStartOf="@id/leftguide"
         app:layout_constraintTop_toBottomOf="@+id/til3">
@@ -38,10 +46,13 @@
             android:id="@+id/editTextTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:autofillHints="emailAddress"
-
+            android:background="@android:color/transparent"
             android:hint="email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,6 +61,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
         app:layout_constraintStart_toStartOf="@id/leftguide"
         app:layout_constraintTop_toBottomOf="@+id/til4">
@@ -58,10 +71,13 @@
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:autofillHints="password"
-
+            android:background="@android:color/transparent"
             android:hint="password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,6 +86,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
         app:layout_constraintEnd_toEndOf="@id/rightguide"
         app:layout_constraintStart_toStartOf="@id/leftguide"
         app:layout_constraintTop_toBottomOf="@+id/til5">
@@ -78,10 +96,13 @@
             android:id="@+id/editTextRepeatPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:autofillHints="password"
-
-            android:hint="repeat password"
-            android:inputType="textPassword" />
+            android:background="@android:color/transparent"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,16 +110,14 @@
         android:id="@+id/bsignup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:backgroundTint="@color/cleardarkblue"
         android:text="@string/signup2"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/rightguide"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@id/leftguide"
-        app:layout_constraintTop_toBottomOf="@+id/til6"
-        app:layout_constraintVertical_bias="0.989" />
+        app:layout_constraintEnd_toStartOf="@+id/rightguide"
+        app:layout_constraintStart_toStartOf="@+id/leftguide"
+        app:layout_constraintTop_toBottomOf="@+id/til6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftguide"

@@ -21,17 +21,14 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         openApp(true);
 
-        ImageView logAppIcon = findViewById(R.id.imageView);
+        ImageView logAppIcon = findViewById(R.id.logo);
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
         logAppIcon.startAnimation(myanim);
 
         Glide.with(this)
-                //.load("https://images.unsplash.com/photo-1565214975484-3cfa9e56f914?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1482&q=80")
                 .load(R.drawable.ic_logo2)
                 .transition(DrawableTransitionOptions.withCrossFade(10))
                 .centerCrop()
-//                .placeholder(new ColorDrawable(this.getResources().getColor(R.color.fucsia_200)))
-//                .circleCrop()
                 .into(logAppIcon);
     }
 

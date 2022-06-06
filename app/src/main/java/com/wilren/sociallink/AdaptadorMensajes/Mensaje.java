@@ -9,7 +9,7 @@ public class Mensaje {
 
     //private String fotoPerfil;
 
-    public Mensaje(String nombre, String fecha, String ultMensaje){
+    public Mensaje(String nombre, String fecha, String ultMensaje) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.ultMensaje = ultMensaje;

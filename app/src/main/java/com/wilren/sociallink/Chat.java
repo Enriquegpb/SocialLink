@@ -1,5 +1,7 @@
 package com.wilren.sociallink;
 
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,6 +44,7 @@ public class Chat extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
+    private Uri imageUri;
     private String mensaje = "";
     private boolean nuevo;
 
@@ -102,6 +104,8 @@ public class Chat extends AppCompatActivity {
         perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                changephoto(view);
+
                 Toast.makeText(Chat.this, "Futura informacion del usuario.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -128,41 +132,64 @@ public class Chat extends AppCompatActivity {
         }
     }
 
+
+//    //hasta aqui
+//    public void changephoto(View view) {
+//
+//        openGallery();
+//
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setPhotoUri(Uri.parse(String.valueOf(imageUri)))
+//                .build();
+//
+//        user.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d("TAG", "User profile updated.");
+//                        }
+//                    }
+//                });
+//        AdaptadorChats.notifyDataSetChanged();
+//    }
+//
+//    private void openGallery() {
+//        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//        startActivityForResult(gallery, PICK_IMAGE);
+//    }
+//
+//    private void openCamera() {
+//        File fotoFile = new File(getApplicationContext().getFilesDir(), "fotoPerfil");
+//        String pathFotoFile = fotoFile.getAbsolutePath();
+//        Uri fotoUri = Uri.fromFile(fotoFile);
+//        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (camera.resolveActivity(getPackageManager()) != null) {
+//            camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
+//            startActivityForResult(camera, RESP_TOMAR_FOTO);
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE || requestCode == RESP_TOMAR_FOTO)) {
+//            imageUri = data.getData();
+//            //imgPerfil_newuser_class.setImageURI(imageUri);
+//            //imgPerfil_toolbar_class.setImageURI(imageUri);
+//        }
+//    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(mensaje.length() > 0){
-            if(mensaje.length() > 34){
-                mensaje = mensaje.substring(0, 34) + "...";
-            }
+        if(nuevo && mensaje.length() > 0){
             ultimoMensaje();
-            fechaActual();
         }
-
-    }
-
-    public void fechaActual(){
-        FirebaseDatabase bbdd =  FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
-
-        DatabaseReference fb = bbdd.getReference("Contactos");
-        fb.keepSynced(true);
-
-        String tiempo = AdaptadorChats.fechaUltimoMensaje();
-        fb.child(user.getUid()).child(persona.getId()).child("fecha").setValue(tiempo);
-        fb.child(persona.getId()).child(user.getUid()).child("fecha").setValue(tiempo);
     }
 
     public void ultimoMensaje(){
-        FirebaseDatabase bbdd =  FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference fb = bbdd.getReference("Contactos");
-        fb.keepSynced(true);
-        //Mensaje para persona actual
-        fb.child(user.getUid()).child(persona.getId()).child("ultimoMensaje").setValue(mensaje);
-        //Mensaje para persona a enviar
-        fb.child(persona.getId()).child(user.getUid()).child("ultimoMensaje").setValue(mensaje);
-    }
-
-    public void nuevoUsuario(){
         FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").
                 getReference("Contactos").
                 child(user.getUid()).
@@ -172,5 +199,6 @@ public class Chat extends AppCompatActivity {
                 getReference("Contactos").
                 child(persona.getId()).
                 child(user.getUid()).setValue("");
+
     }
 }

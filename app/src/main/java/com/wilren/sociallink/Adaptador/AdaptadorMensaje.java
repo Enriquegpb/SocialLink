@@ -3,27 +3,43 @@ package com.wilren.sociallink.Adaptador;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Chat;
+import com.wilren.sociallink.MainActivity;
+import com.wilren.sociallink.ModelChat;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,7 +73,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(holder.fotoPerfil);
         }
 
-        holder.fecha.setText(persona.getFechaUltimoMensaje());
+//        holder.fecha.setText(listaMensajes.get(position).getFecha());
 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +94,7 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
                 builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        borrarConversacion(persona.getId());
-                        borrarDatosRealTime(persona.getId());
+                        borrarConversacion(listaMensajes.get(position).getId());
                     }
                 });
 
@@ -127,13 +142,5 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
         Toast.makeText(activity, "conversacion borrada", Toast.LENGTH_SHORT).show();
     }
 
-    public void borrarDatosRealTime(String id){
-        FirebaseDatabase bbdd =  FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference fb = bbdd.getReference("Contactos");
-
-        fb.child(persona).child(id).child("fecha").setValue("");
-        fb.child(persona).child(id).child("ultimoMensaje").setValue("");
-
-    }
 
 }

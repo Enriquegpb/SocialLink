@@ -4,12 +4,16 @@ package com.wilren.sociallink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,10 +22,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private final FirebaseDatabase INSTANCIA = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
     private CircleImageView searchView;
     private ArrayList<String> usuariosContactos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,42 +74,28 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     public void cargaUsuarios() {
         DatabaseReference data = INSTANCIA.getReference("Contactos").child(user.getUid());
         data.keepSynced(true);
-
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 contactos.clear();
-                usuariosContactos.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String key = dataSnapshot.getKey();
                     for (int i = 0; i < listaUsuarios.size(); i++) {
-                        if (key.equals(listaUsuarios.get(i).getId())) {
+                        if (dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())) {
                             Persona persona = listaUsuarios.get(i);
                             if (!contactos.contains(persona)) {
-                                if(dataSnapshot.hasChild("fecha")){
-                                    persona.setFechaUltimoMensaje(dataSnapshot.child("fecha").getValue().toString());
-                                }else {
-                                    persona.setFechaUltimoMensaje("");
-                                }
-                                if(dataSnapshot.hasChild("ultimoMensaje")){
-                                    persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
-                                }else{
-                                    persona.setUltimoMensaje("");
-                                }
-
                                 usuariosContactos.add(persona.getId());
                                 contactos.add(persona);
+                                adapter.notifyItemRangeInserted(0, contactos.size());
                             }
                         }
                     }
                 }
-                adapter.notifyItemRangeInserted(0, contactos.size());
-                adapter.notifyDataSetChanged();
                 listaMensajes.setAdapter(adapter);
             }
 
@@ -116,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                listaUsuarios.clear();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String id = dataSnapshot.child("id").getValue().toString();
@@ -140,4 +135,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public Persona propiedadesMensaje(Persona persona) {
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+
+        Query query = rootRef.collection("chat")
+                .document(user.getUid()).collection(persona.getId())
+                .orderBy("time", Query.Direction.ASCENDING)
+                .limit(1);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    persona.setUltimoMensaje(task.getResult().getDocuments().get(0).get("text").toString());
+                }
+            }
+        });
+
+        return persona;
+    }
+
 }
