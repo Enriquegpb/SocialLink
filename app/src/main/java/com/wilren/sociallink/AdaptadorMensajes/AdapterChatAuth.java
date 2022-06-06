@@ -18,10 +18,13 @@ import com.wilren.sociallink.R;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.Date;
+
 public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, AdapterChatAuth.MessengeHolder> {
     private static final int M_R = 0;
     private static final int M_I = 1;
 
+    private String tiempo;
     PrettyTime p = new PrettyTime();
 
 
@@ -38,11 +41,23 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
         super(options);
     }
 
+    public String fechaUltimoMensaje(){
+        return this.tiempo;
+    }
+
     @Override
     protected void onBindViewHolder(@NonNull MessengeHolder holder, int position, @NonNull ModelChat model) {
 //        Una forma mas bonita de hacer la fecha
-//        Date fecha = model.getTime();
-//        String tiempo = fecha.getHours() +":"+ fecha.getMinutes() + "";
+        Date fecha = model.getTime();
+
+        int minutos = fecha.getMinutes();
+        if(minutos == 0){
+            this.tiempo = fecha.getHours() +":00";
+        }else if(minutos > 0 && minutos < 10){
+            this.tiempo = fecha.getHours() +":0" + minutos;
+        }else{
+            this.tiempo = fecha.getHours() +":" + minutos;
+        }
         holder.timeTv.setText(p.format(model.getTime()));
         holder.textTv.setText(model.getText());
     }
