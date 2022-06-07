@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import com.squareup.picasso.Picasso;
-import com.wilren.sociallink.Adaptador.AdapterChatAuth;
+import com.wilren.sociallink.AdaptadorMensajes.AdapterChatAuth;
 import com.wilren.sociallink.Persona.Persona;
 
 import java.util.Date;

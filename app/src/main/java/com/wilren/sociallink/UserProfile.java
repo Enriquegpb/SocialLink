@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import com.wilren.sociallink.Persona.Persona;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -44,34 +46,40 @@ public class UserProfile extends AppCompatActivity {
     private EditText et1, et2, et3;
     private Button button;
     private CircleImageView imageview_account_profile;
-    private Uri imageUri;
-    private Uri retrievePhotoProfile;
+    private Uri retrievePhotoProfile, imageUri;
     private Persona personaActual;
     private DatabaseReference databaseReference;
+    private TextView descripcionTv;
+    private String nombrePerfil;
+    private int numeroTelefono;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        databaseReference = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                .child(user.getUid());
         et1 = findViewById(R.id.profileName);
         et2 = findViewById(R.id.description);
         et3 = findViewById(R.id.Movile);
-
+        descripcionTv = findViewById(R.id.descripcion);
         et1.setText(user.getDisplayName());
+
 
         personaActual = getIntent().getParcelableExtra("personaActual");
 
-        FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
-                .child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@androidx.annotation.NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     try {
                         personaActual.setDescription(
-                                snapshot.child("descripcion").getValue().toString());
-                        personaActual.setPhoneNumber(Integer.parseInt(snapshot.child("numeroTelefono").getValue().toString()));
+                                Objects.requireNonNull(snapshot.child("descripcion").getValue()).toString());
+                        personaActual.setPhoneNumber(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
                         et2.setText(personaActual.getDescription());
+                        descripcionTv.setText(personaActual.getDescription());
                         et3.setText(String.valueOf(personaActual.getPhoneNumber()));
                     } catch (NullPointerException e) {
                         Toast.makeText(UserProfile.this, "Adelante usuario. Puedes editar tu perfil.", Toast.LENGTH_SHORT).show();
@@ -93,7 +101,9 @@ public class UserProfile extends AppCompatActivity {
         imageview_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeUserPhoto(user);
+                changeUserPhoto();
+
+
             }
         });
 
@@ -103,7 +113,7 @@ public class UserProfile extends AppCompatActivity {
                     .fitCenter()
                     .centerCrop()
                     .into(imageview_account_profile);
-        }else{
+        } else {
             Glide.with(UserProfile.this)
                     .load(R.mipmap.ic_launcher)
                     .fitCenter()
@@ -115,21 +125,26 @@ public class UserProfile extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeUserData(user);
-                et1.setText(et1.getText());
-                et2.setText(et2.getText());
-                et3.setText(et3.getText());
+                nombrePerfil = et1.getText().toString();
+                if (nombrePerfil.length() > 0)
+                    changeUserData(user);
 
+                et2.setText(et2.getText());
+                String numCadena = et3.getText().toString();
+                et3.setText(et3.getText());
+                if (numCadena.length() > 0)
+                    numeroTelefono = Integer.parseInt(numCadena);
+                else
+                    numeroTelefono = 0;
 
                 Map<String, Object> personaMap = new HashMap<>();
-                if(user.getDisplayName().length()>0)
-                personaMap.put("nombre", user.getDisplayName());
+                if (Objects.requireNonNull(user.getDisplayName()).length() > 0)
+                    personaMap.put("nombre", user.getDisplayName());
                 else
-                    personaMap.put("nombre","");
+                    personaMap.put("nombre", nombrePerfil);
                 personaMap.put("descripcion", et2.getText().toString());
-                personaMap.put("numeroTelefono", et3.getText().toString());
-                FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
-                        .child(user.getUid()).updateChildren(personaMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                personaMap.put("numeroTelefono", numeroTelefono);
+                databaseReference.updateChildren(personaMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(UserProfile.this, "La actualizacion de los datos del perfil se ha realizado correctamente", Toast.LENGTH_SHORT).show();
@@ -152,26 +167,25 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void changeUserData(FirebaseUser user) {
-        if (et1.getText().length() > 0) {
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(et1.getText().toString())
-                    .build();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(et1.getText().toString())
+                .build();
 
 
-            user.updateProfile(profileUpdates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("TAG", "User profile updated.");
-                            }
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@androidx.annotation.NonNull @NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("TAG", "User profile updated.");
                         }
-                    });
-        }
-
+                    }
+                });
     }
 
-    private void changeUserPhoto(FirebaseUser user) {
+
+    private void changeUserPhoto() {
         openGallery();
     }
 
@@ -182,7 +196,6 @@ public class UserProfile extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && (requestCode == PICK_IMAGE)) {
             imageUri = data.getData();
-
 
             StorageReference filePath = FirebaseStorage.getInstance().getReference().child("fotos").child(imageUri.getLastPathSegment());
             UploadTask uploadTask = filePath.putFile(imageUri);
@@ -201,8 +214,7 @@ public class UserProfile extends AppCompatActivity {
                         retrievePhotoProfile = task.getResult();
                         Map<String, Object> personaMap2 = new HashMap<>();
                         personaMap2.put("fotoPerfil", retrievePhotoProfile.toString());
-                        FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
-                                .child(user.getUid()).updateChildren(personaMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        databaseReference.updateChildren(personaMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(UserProfile.this, "La imagen se ha subido correctamente", Toast.LENGTH_SHORT).show();

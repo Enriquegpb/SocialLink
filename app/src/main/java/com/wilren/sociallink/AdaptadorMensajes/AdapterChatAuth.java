@@ -1,4 +1,4 @@
-package com.wilren.sociallink.Adaptador;
+package com.wilren.sociallink.AdaptadorMensajes;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +41,7 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
         super(options);
     }
 
-    public String fechaUltimoMensaje(){
+    public String fechaUltimoMensaje() {
         return this.tiempo;
     }
 
@@ -51,12 +51,12 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
         Date fecha = model.getTime();
 
         int minutos = fecha.getMinutes();
-        if(minutos == 0){
-            this.tiempo = fecha.getHours() +":00";
-        }else if(minutos > 0 && minutos < 10){
-            this.tiempo = fecha.getHours() +":0" + minutos;
-        }else{
-            this.tiempo = fecha.getHours() +":" + minutos;
+        if (minutos == 0) {
+            this.tiempo = fecha.getHours() + ":00";
+        } else if (minutos > 0 && minutos < 10) {
+            this.tiempo = fecha.getHours() + ":0" + minutos;
+        } else {
+            this.tiempo = fecha.getHours() + ":" + minutos;
         }
         holder.timeTv.setText(p.format(model.getTime()));
         holder.textTv.setText(model.getText());
@@ -66,7 +66,6 @@ public class AdapterChatAuth extends FirestoreRecyclerAdapter<ModelChat, Adapter
     @Override
     public MessengeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
         if (viewType == M_R)
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item_chat_auth, parent, false);
         else
