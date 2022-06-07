@@ -4,16 +4,12 @@ package com.wilren.sociallink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,18 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 import com.wilren.sociallink.Adaptador.AdaptadorMensaje;
 import com.wilren.sociallink.Persona.Persona;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -101,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
                         if (dataSnapshot.getKey().equals(listaUsuarios.get(i).getId())) {
                             Persona persona = listaUsuarios.get(i);
                             if (!contactos.contains(persona)) {
-                                if(dataSnapshot.hasChild("fecha")){
+                                if (dataSnapshot.hasChild("fecha")) {
                                     persona.setFechaUltimoMensaje(dataSnapshot.child("fecha").getValue().toString());
-                                }else {
+                                } else {
                                     persona.setFechaUltimoMensaje("");
                                 }
-                                if(dataSnapshot.hasChild("ultimoMensaje")){
+                                if (dataSnapshot.hasChild("ultimoMensaje")) {
                                     persona.setUltimoMensaje(dataSnapshot.child("ultimoMensaje").getValue().toString());
-                                }else{
+                                } else {
                                     persona.setUltimoMensaje("");
                                 }
 
@@ -151,17 +140,21 @@ public class MainActivity extends AppCompatActivity {
                     persona.setId(id);
                     persona.setFotoPerfil(fotoPerfil);
 
-                    if(dataSnapshot.hasChild("numeroTelefono")){
-                        int numeroTelefono = Integer.parseInt(dataSnapshot.child("numeroTelefono").getValue().toString());
-                        persona.setPhoneNumber(numeroTelefono);
-                    }else{
+                    /*if (dataSnapshot.hasChild("numeroTelefono")) {
+                        if (dataSnapshot.child("numeroTelefono").getValue() != null) {
+                            int numeroTelefono = Integer.parseInt(dataSnapshot.child("numeroTelefono").getValue().toString());
+                            persona.setPhoneNumber(numeroTelefono);
+                        } else {
+                            persona.setPhoneNumber(0);
+                        }
+                    } else {
                         persona.setPhoneNumber(0);
-                    }
+                    }*/
 
 
-                    if (user.getUid().equals(id)){
+                    if (user.getUid().equals(id)) {
                         personaActual = persona;
-                        if(!fotoPerfil.isEmpty()){
+                        if (!fotoPerfil.isEmpty()) {
                             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(usuarioActual);
                         }
                     }

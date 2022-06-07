@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/numero_de_telefono"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/save"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"

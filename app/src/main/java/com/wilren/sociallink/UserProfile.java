@@ -50,6 +50,8 @@ public class UserProfile extends AppCompatActivity {
     private Persona personaActual;
     private DatabaseReference databaseReference;
     private TextView descripcionTv;
+    private String nombrePerfil;
+    private int numeroTelefono;
 
 
     @Override
@@ -62,7 +64,7 @@ public class UserProfile extends AppCompatActivity {
         et1 = findViewById(R.id.profileName);
         et2 = findViewById(R.id.description);
         et3 = findViewById(R.id.Movile);
-        descripcionTv=findViewById(R.id.descripcion);
+        descripcionTv = findViewById(R.id.descripcion);
         et1.setText(user.getDisplayName());
 
 
@@ -123,19 +125,25 @@ public class UserProfile extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeUserData(user);
-                et1.setText(et1.getText());
-                et2.setText(et2.getText());
-                et3.setText(et3.getText());
+                nombrePerfil = et1.getText().toString();
+                if (nombrePerfil.length() > 0)
+                    changeUserData(user);
 
+                et2.setText(et2.getText());
+                String numCadena = et3.getText().toString();
+                et3.setText(et3.getText());
+                if (numCadena.length() > 0)
+                    numeroTelefono = Integer.parseInt(numCadena);
+                else
+                    numeroTelefono = 0;
 
                 Map<String, Object> personaMap = new HashMap<>();
                 if (Objects.requireNonNull(user.getDisplayName()).length() > 0)
                     personaMap.put("nombre", user.getDisplayName());
                 else
-                    personaMap.put("nombre", "");
+                    personaMap.put("nombre", nombrePerfil);
                 personaMap.put("descripcion", et2.getText().toString());
-                personaMap.put("numeroTelefono", et3.getText().toString());
+                personaMap.put("numeroTelefono", numeroTelefono);
                 databaseReference.updateChildren(personaMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -159,24 +167,23 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void changeUserData(FirebaseUser user) {
-        if (et1.getText().length() > 0) {
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(et1.getText().toString())
-                    .build();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(et1.getText().toString())
+                .build();
 
 
-            user.updateProfile(profileUpdates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@androidx.annotation.NonNull @NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("TAG", "User profile updated.");
-                            }
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@androidx.annotation.NonNull @NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("TAG", "User profile updated.");
                         }
-                    });
-        }
-
+                    }
+                });
     }
+
 
     private void changeUserPhoto() {
         openGallery();

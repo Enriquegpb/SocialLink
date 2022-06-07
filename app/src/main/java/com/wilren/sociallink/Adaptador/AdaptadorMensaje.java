@@ -142,5 +142,4 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
         Toast.makeText(activity, "conversacion borrada", Toast.LENGTH_SHORT).show();
     }
 
-
 }
