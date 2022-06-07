@@ -1,6 +1,5 @@
 package com.wilren.sociallink;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -85,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     public void cargaUsuarios() {
@@ -152,12 +149,15 @@ public class MainActivity extends AppCompatActivity {
                     persona.setFotoPerfil(fotoPerfil);
 
                     if(dataSnapshot.hasChild("numeroTelefono")){
-                        int numeroTelefono = Integer.parseInt(dataSnapshot.child("numeroTelefono").getValue().toString());
-                        persona.setPhoneNumber(numeroTelefono);
+                        String telefono = dataSnapshot.child("numeroTelefono").getValue().toString();
+                        if(!telefono.isEmpty()) {
+                            persona.setPhoneNumber(Integer.parseInt(telefono));
+                        }else{
+                            persona.setPhoneNumber(0);
+                        }
                     }else{
                         persona.setPhoneNumber(0);
                     }
-
 
                     if (user.getUid().equals(id)){
                         personaActual = persona;
@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
                             Picasso.get().load(persona.getFotoPerfil()).placeholder(R.drawable.user).into(usuarioActual);
                         }
                     }
-
                     listaUsuarios.add(persona);
                 }
             }
@@ -176,4 +175,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }
