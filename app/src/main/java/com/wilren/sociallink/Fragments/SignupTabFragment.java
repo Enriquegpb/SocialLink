@@ -39,10 +39,10 @@ public class SignupTabFragment extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
 
         bsignup = root.findViewById(R.id.bsignup);
-        username = root.findViewById(R.id.editTextTextPersonName);
-        email = root.findViewById(R.id.editTextTextEmail);
-        password = root.findViewById(R.id.editTextTextPassword);
-        repeatPassword = root.findViewById(R.id.editTextRepeatPassword);
+        username = root.findViewById(R.id.userRegistro);
+        email = root.findViewById(R.id.emailRegistro);
+        password = root.findViewById(R.id.passwordRegistro);
+        repeatPassword = root.findViewById(R.id.passwordConfirmacionRegistro);
         mAuth = FirebaseAuth.getInstance();
         fbdb = FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/");
         db = FirebaseFirestore.getInstance();
@@ -57,10 +57,10 @@ public class SignupTabFragment extends Fragment {
     }
 
     private void signup() {
-        String user = "persona4";//username.getText().toString().trim();
-        String mail = "persona4@gmail.com";//email.getText().toString().trim();
-        String pass = "123456";//password.getText().toString().trim();
-        String repeatPass = "123456";//repeatPassword.getText().toString().trim();
+        String user = username.getText().toString().trim();
+        String mail = email.getText().toString().trim();
+        String pass = password.getText().toString().trim();
+        String repeatPass = repeatPassword.getText().toString().trim();
         if (user.isEmpty()) {
             username.setError("");
         }

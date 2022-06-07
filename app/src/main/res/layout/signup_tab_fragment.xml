@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias=".2">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/userRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -27,6 +27,7 @@
             android:background="@android:color/transparent"
             android:hint="username"
             android:inputType="textPersonName"
+            android:textColor="@color/black"
             android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/til3">
 
         <EditText
-            android:id="@+id/editTextTextEmail"
+            android:id="@+id/emailRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -52,6 +53,7 @@
             android:background="@android:color/transparent"
             android:hint="email"
             android:inputType="textEmailAddress"
+            android:textColor="@color/black"
             android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/til4">
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/passwordRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -77,6 +79,7 @@
             android:background="@android:color/transparent"
             android:hint="password"
             android:inputType="textPassword"
+            android:textColor="@color/black"
             android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/til5">
 
         <EditText
-            android:id="@+id/editTextRepeatPassword"
+            android:id="@+id/passwordConfirmacionRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -102,6 +105,7 @@
             android:background="@android:color/transparent"
             android:hint="Password"
             android:inputType="textPassword"
+            android:textColor="@color/black"
             android:padding="8dp" />
 
     </com.google.android.material.textfield.TextInputLayout>

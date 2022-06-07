@@ -67,7 +67,6 @@ public class UserProfile extends AppCompatActivity {
         descripcionTv = findViewById(R.id.descripcion);
         et1.setText(user.getDisplayName());
 
-
         personaActual = getIntent().getParcelableExtra("personaActual");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
