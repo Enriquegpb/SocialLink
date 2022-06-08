@@ -47,10 +47,10 @@ public class LoginTabFragment extends Fragment {
         String pass = password.getText().toString();
 
         if (mail.isEmpty()) {
-            email.setError("");
+            email.setError("Introducie el correo para iniciar sesión");
         }
         if (pass.isEmpty()) {
-            password.setError("");
+            password.setError("Introduce la contraseña para iniciar sesión");
         } else {
             mAuth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -60,7 +60,7 @@ public class LoginTabFragment extends Fragment {
                         startActivity(logeado);
 
                     } else {
-                        Toast.makeText(getActivity(), "Login Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Autenticación errónea, inténtelo otra vez", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

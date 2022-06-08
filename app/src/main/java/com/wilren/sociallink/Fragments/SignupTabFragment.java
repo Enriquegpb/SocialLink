@@ -1,6 +1,5 @@
 package com.wilren.sociallink.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wilren.sociallink.ModelChat;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SignupTabFragment extends Fragment {
 
@@ -62,16 +55,16 @@ public class SignupTabFragment extends Fragment {
         String pass = password.getText().toString().trim();
         String repeatPass = repeatPassword.getText().toString().trim();
         if (user.isEmpty()) {
-            username.setError("");
+            username.setError("Introduce el nombre de usuario");
         }
         if (mail.isEmpty()) {
-            email.setError("");
+            email.setError("Introduce el correo eletrónico");
         }
         if (pass.isEmpty()) {
-            password.setError("");
+            password.setError("Debes introducir una contraseña");
         }
         if (repeatPass.isEmpty()) {
-            repeatPassword.setError("");
+            repeatPassword.setError("Debes repetir la contraseña");
         } else {
             mAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -79,16 +72,11 @@ public class SignupTabFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Toast.makeText(getActivity(), "Successfully registered", Toast.LENGTH_SHORT).show();
                         String id = task.getResult().getUser().getUid();
-
-                        Persona persona = new Persona(id, user, mail, "", "",0);
-
+                        Persona persona = new Persona(id, user, mail, "", "", 0);
                         fbdb.getReference().child("Users").child(id).setValue(persona);
-
                         fbdb.getReference().child("Contactos").child(id).setValue("");
-
-                        //startActivity(new Intent(getActivity(), Chat.class));
                     } else {
-                        Toast.makeText(getActivity(), "Oops, something went wrong, try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Error de registro de usuario, inténtelo otra vez", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

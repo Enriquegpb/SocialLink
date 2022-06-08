@@ -51,7 +51,7 @@ public class UserContactProfile extends AppCompatActivity {
                         contacto.setPhoneNumber(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
                         contacto.setFotoPerfil(String.valueOf(Uri.parse(Objects.requireNonNull(snapshot.child("fotoPerfil").getValue()).toString())));
                         descripcion.setText(contacto.getDescription());
-                        movil.setText(String.valueOf("Numero de contacto: " + contacto.getPhoneNumber()));
+                        movil.setText("Numero de contacto: " + contacto.getPhoneNumber());
 
 
                     } catch (NullPointerException e) {
