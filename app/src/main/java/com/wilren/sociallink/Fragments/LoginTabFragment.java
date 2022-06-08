@@ -47,7 +47,7 @@ public class LoginTabFragment extends Fragment {
         String pass = password.getText().toString();
 
         if (mail.isEmpty()) {
-            email.setError("Introducie el correo para iniciar sesión");
+            email.setError("Introduce el correo para iniciar sesión");
         }
         if (pass.isEmpty()) {
             password.setError("Introduce la contraseña para iniciar sesión");

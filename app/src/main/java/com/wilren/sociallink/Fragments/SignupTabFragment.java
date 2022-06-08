@@ -70,7 +70,7 @@ public class SignupTabFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Successfully registered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Te has registrado en la aplicación", Toast.LENGTH_SHORT).show();
                         String id = task.getResult().getUser().getUid();
                         Persona persona = new Persona(id, user, mail, "", "", 0);
                         fbdb.getReference().child("Users").child(id).setValue(persona);
