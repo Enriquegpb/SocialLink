@@ -75,7 +75,7 @@
         android:layout_height="48dp"
         android:layout_marginBottom="72dp"
         android:background="@drawable/formato_escribir_mensaje"
-        android:hint="Iniciar Sesión"
+        android:hint="INICIAR SESIÓN"
         android:text="@string/login"
         android:textColorHint="@color/white"
         android:textSize="20sp"

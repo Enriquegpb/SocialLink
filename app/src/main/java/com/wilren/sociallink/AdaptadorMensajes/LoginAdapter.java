@@ -1,4 +1,4 @@
-package com.wilren.sociallink.Adaptador;
+package com.wilren.sociallink.AdaptadorMensajes;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
