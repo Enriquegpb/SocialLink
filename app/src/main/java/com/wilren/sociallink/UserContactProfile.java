@@ -81,7 +81,7 @@ public class UserContactProfile extends AppCompatActivity {
                     .into(perfil);
         } else {
             Glide.with(UserContactProfile.this)
-                    .load(R.mipmap.ic_launcher)
+                    .load(R.drawable.user)
                     .fitCenter()
                     .centerCrop()
                     .into(perfil);
