@@ -25,7 +25,6 @@ public class UserContactProfile extends AppCompatActivity {
     private Persona contacto;
     private TextView nombre, descripcion, movil, correo;
     private CircleImageView perfil;
-
     private DatabaseReference databaseReference;
 
     @Override
@@ -34,7 +33,7 @@ public class UserContactProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_contact_profile);
         correo = findViewById(R.id.correo);
         nombre = findViewById(R.id.profileName);
-        descripcion = findViewById(R.id.descripcion);
+        descripcion = findViewById(R.id.presentation);
         movil = findViewById(R.id.Movile);
         perfil = findViewById(R.id.imageview_account_profile);
         contacto = getIntent().getParcelableExtra("personaActual");
@@ -87,5 +86,6 @@ public class UserContactProfile extends AppCompatActivity {
                     .centerCrop()
                     .into(perfil);
         }
+
     }
 }

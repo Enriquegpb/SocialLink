@@ -14,7 +14,7 @@
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/user"
         app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/save"
@@ -24,19 +24,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.074" />
 
-    <EditText
-        android:id="@+id/profileName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Nombre de Usuario"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/description"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_account_profile"
-        app:layout_constraintVertical_bias="1.0" />
+
+
+
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -52,34 +44,86 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="32dp" />
 
-    <EditText
-        android:id="@+id/description"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Descripcion"
-        android:inputType="textPersonName"
-        android:maxLength="120"
-        app:layout_constraintBottom_toTopOf="@+id/Movile"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/imageview_account_profile"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias=".2">
 
-    <EditText
-        android:id="@+id/Movile"
+        <EditText
+            android:id="@+id/profileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:autofillHints="userid"
+            android:background="@android:color/transparent"
+            android:hint="Nick"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/numero_de_telefono"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/save"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_account_profile"
-        app:layout_constraintVertical_bias="0.466" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/til3">
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:autofillHints="emailAddress"
+            android:background="@android:color/transparent"
+            android:hint="Descripcion"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/propiedades_edit_text"
+        android:textColorHint="@color/midarkblue"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/til4">
+        <EditText
+            android:id="@+id/movil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:autofillHints="password"
+            android:background="@android:color/transparent"
+            android:hint="Movil"
+            android:inputType="number"
+            android:padding="8dp"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <Button
         android:id="@+id/save"
@@ -101,12 +145,12 @@
         app:layout_constraintGuide_begin="234dp" />
 
     <TextView
-        android:id="@+id/descripcion"
+        android:id="@+id/presentation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/profileName"
+        app:layout_constraintBottom_toTopOf="@+id/til3"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/imageview_account_profile" />

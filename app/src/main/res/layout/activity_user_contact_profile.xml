@@ -14,12 +14,12 @@
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/user"
         app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,6 +27,7 @@
         android:id="@+id/profileName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/cleardarkblue"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -38,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+
         app:layout_constraintGuide_end="32dp" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -52,6 +54,7 @@
         android:id="@+id/Movile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/cleardarkblue"
         android:ems="10"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,6 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:background="@color/cleardarkblue"
         android:ems="10"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,10 +80,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/descripcion"
+        android:id="@+id/presentation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
+        android:background="@color/cleardarkblue"
         android:text=""
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/profileName"

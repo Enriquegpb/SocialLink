@@ -63,8 +63,8 @@ public class UserProfile extends AppCompatActivity {
                 .child(user.getUid());
         et1 = findViewById(R.id.profileName);
         et2 = findViewById(R.id.description);
-        et3 = findViewById(R.id.Movile);
-        descripcionTv = findViewById(R.id.descripcion);
+        et3 = findViewById(R.id.movil);
+        descripcionTv = findViewById(R.id.presentation);
         et1.setText(user.getDisplayName());
 
         personaActual = getIntent().getParcelableExtra("personaActual");
@@ -114,7 +114,7 @@ public class UserProfile extends AppCompatActivity {
                     .into(imageview_account_profile);
         } else {
             Glide.with(UserProfile.this)
-                    .load(R.mipmap.ic_launcher)
+                    .load(R.drawable.user)
                     .fitCenter()
                     .centerCrop()
                     .into(imageview_account_profile);
