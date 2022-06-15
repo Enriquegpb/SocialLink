@@ -90,11 +90,12 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             public boolean onLongClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setMessage("Borrar conversacion");
+                builder.setMessage("Borrar conversacion con " + persona.getNombre());
                 builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        borrarConversacion(listaMensajes.get(position).getId());
+                        borrarConversacion(persona.getId());
+                        borradoListaContactos(persona.getId());
                     }
                 });
 
@@ -139,7 +140,15 @@ public class AdaptadorMensaje extends RecyclerView.Adapter<AdaptadorMensaje.Mens
             }
         });
 
-        Toast.makeText(activity, "conversacion borrada", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Conversacion borrada", Toast.LENGTH_SHORT).show();
+    }
+    public void borradoListaContactos(String id){
+        FirebaseDatabase.getInstance("https://sociallink-2bf20-default-rtdb.europe-west1.firebasedatabase.app/").
+                getReference().
+                child("Contactos").
+                child(persona).
+                child(id).
+                removeValue();
     }
 
 }
