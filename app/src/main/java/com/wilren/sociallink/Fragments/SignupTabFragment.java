@@ -15,10 +15,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
+import com.wilren.sociallink.UserProfile;
 
 public class SignupTabFragment extends Fragment {
 
@@ -70,6 +73,18 @@ public class SignupTabFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setDisplayName(user).build();
+                        FirebaseUser usuario = mAuth.getCurrentUser();
+
+                        usuario.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getActivity(), "Si", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                         Toast.makeText(getActivity(), "Te has registrado en la aplicación", Toast.LENGTH_SHORT).show();
                         String id = task.getResult().getUser().getUid();
                         Persona persona = new Persona(id, user, mail, "", "", 0);

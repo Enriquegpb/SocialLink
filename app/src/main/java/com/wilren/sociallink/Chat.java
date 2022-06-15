@@ -32,8 +32,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Chat extends AppCompatActivity {
 
     private Persona persona;
-    private final int RESP_TOMAR_FOTO = 0;
-    private final int PICK_IMAGE = 1;
     private RecyclerView rvMensajes;
     private LinearLayoutManager linearLayoutManager;
     private TextView userName;
@@ -45,7 +43,6 @@ public class Chat extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatreference = db.collection("chat");
     private CollectionReference chatEnviar = chatreference;
-    private Uri imageUri;
     private String mensaje = "";
     private boolean nuevo;
 
