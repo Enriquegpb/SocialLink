@@ -9,17 +9,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Persona implements Parcelable {
 
 
-    public String id, nombre, email, fotoPerfil, ultimoMensaje, description, fechaUltimoMensaje;
-    private int phoneNumber;
+    public String id, nombre, email, fotoPerfil, ultimoMensaje, descripcion, fechaUltimoMensaje;
+    private int numeroTelefono;
 
 
-    public Persona(String id, String nombre, String email, String fotoPerfil, String description, int phoneNumber) {
+    public Persona(String id, String nombre, String email, String fotoPerfil, String descripcion, int numeroTelefono) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.fotoPerfil = fotoPerfil;
-        this.description = description;
-        this.phoneNumber = phoneNumber;
+        this.descripcion = descripcion;
+        this.numeroTelefono = numeroTelefono;
     }
 
 
@@ -32,9 +32,9 @@ public class Persona implements Parcelable {
         email = in.readString();
         fotoPerfil = in.readString();
         ultimoMensaje = in.readString();
-        description = in.readString();
+        descripcion = in.readString();
         fechaUltimoMensaje = in.readString();
-        phoneNumber = in.readInt();
+        numeroTelefono = in.readInt();
     }
 
     public static final Creator<Persona> CREATOR = new Creator<Persona>() {
@@ -49,20 +49,20 @@ public class Persona implements Parcelable {
         }
     };
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public int getNumeroTelefono() {
+        return numeroTelefono;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setNumeroTelefono(int numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
     }
 
     public String getFechaUltimoMensaje() {
@@ -122,13 +122,15 @@ public class Persona implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+
         dest.writeString(id);
         dest.writeString(nombre);
         dest.writeString(email);
         dest.writeString(fotoPerfil);
         dest.writeString(ultimoMensaje);
-        dest.writeString(description);
+        dest.writeString(descripcion);
         dest.writeString(fechaUltimoMensaje);
-        dest.writeInt(phoneNumber);
+        dest.writeInt(numeroTelefono);
     }
+
 }

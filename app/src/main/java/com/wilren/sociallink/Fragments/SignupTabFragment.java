@@ -1,5 +1,6 @@
 package com.wilren.sociallink.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.wilren.sociallink.MainActivity;
 import com.wilren.sociallink.Persona.Persona;
 import com.wilren.sociallink.R;
 import com.wilren.sociallink.UserProfile;
@@ -75,21 +77,24 @@ public class SignupTabFragment extends Fragment {
                     if (task.isSuccessful()) {
                         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setDisplayName(user).build();
                         FirebaseUser usuario = mAuth.getCurrentUser();
+                        String id = task.getResult().getUser().getUid();
 
                         usuario.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(getActivity(), "Si", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Te has registrado en la aplicación", Toast.LENGTH_SHORT).show();
+                                    Persona persona = new Persona(id, user, mail, "", "", 0);
+                                    fbdb.getReference().child("Users").child(id).setValue(persona);
+                                    fbdb.getReference().child("Contactos").child(id).setValue("");
+
                                 }
                             }
                         });
 
-                        Toast.makeText(getActivity(), "Te has registrado en la aplicación", Toast.LENGTH_SHORT).show();
-                        String id = task.getResult().getUser().getUid();
-                        Persona persona = new Persona(id, user, mail, "", "", 0);
-                        fbdb.getReference().child("Users").child(id).setValue(persona);
-                        fbdb.getReference().child("Contactos").child(id).setValue("");
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+
                     } else {
                         Toast.makeText(getActivity(), "Error de registro de usuario, inténtelo otra vez", Toast.LENGTH_SHORT).show();
                     }

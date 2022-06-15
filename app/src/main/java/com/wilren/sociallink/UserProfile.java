@@ -74,12 +74,12 @@ public class UserProfile extends AppCompatActivity {
             public void onDataChange(@androidx.annotation.NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     try {
-                        personaActual.setDescription(
+                        personaActual.setDescripcion(
                                 Objects.requireNonNull(snapshot.child("descripcion").getValue()).toString());
-                        personaActual.setPhoneNumber(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
-                        et2.setText(personaActual.getDescription());
-                        descripcionTv.setText(personaActual.getDescription());
-                        et3.setText(String.valueOf(personaActual.getPhoneNumber()));
+                        personaActual.setNumeroTelefono(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
+                        et2.setText(personaActual.getDescripcion());
+                        descripcionTv.setText(personaActual.getDescripcion());
+                        et3.setText(String.valueOf(personaActual.getNumeroTelefono()));
                     } catch (NullPointerException e) {
                         Toast.makeText(UserProfile.this, "Adelante usuario. Puedes editar tu perfil.", Toast.LENGTH_SHORT).show();
                     }

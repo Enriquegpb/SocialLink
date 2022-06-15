@@ -45,12 +45,12 @@ public class UserContactProfile extends AppCompatActivity {
             public void onDataChange(@androidx.annotation.NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     try {
-                        contacto.setDescription(
+                        contacto.setDescripcion(
                                 Objects.requireNonNull(snapshot.child("descripcion").getValue()).toString());
-                        contacto.setPhoneNumber(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
+                        contacto.setNumeroTelefono(Integer.parseInt(Objects.requireNonNull(snapshot.child("numeroTelefono").getValue()).toString()));
                         contacto.setFotoPerfil(String.valueOf(Uri.parse(Objects.requireNonNull(snapshot.child("fotoPerfil").getValue()).toString())));
-                        descripcion.setText(contacto.getDescription());
-                        movil.setText("Numero de contacto: " + contacto.getPhoneNumber());
+                        descripcion.setText(contacto.getDescripcion());
+                        movil.setText("Numero de contacto: " + contacto.getNumeroTelefono());
 
 
                     } catch (NullPointerException e) {

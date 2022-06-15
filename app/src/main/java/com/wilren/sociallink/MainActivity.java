@@ -151,12 +151,12 @@ public class MainActivity extends AppCompatActivity {
                     if(dataSnapshot.hasChild("numeroTelefono")){
                         String telefono = dataSnapshot.child("numeroTelefono").getValue().toString();
                         if(!telefono.isEmpty()) {
-                            persona.setPhoneNumber(Integer.parseInt(telefono));
+                            persona.setNumeroTelefono(Integer.parseInt(telefono));
                         }else{
-                            persona.setPhoneNumber(0);
+                            persona.setNumeroTelefono(0);
                         }
                     }else{
-                        persona.setPhoneNumber(0);
+                        persona.setNumeroTelefono(0);
                     }
 
                     if (user.getUid().equals(id)){
