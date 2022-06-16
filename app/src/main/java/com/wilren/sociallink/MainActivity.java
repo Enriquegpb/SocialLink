@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        INSTANCIA.setPersistenceEnabled(true);
+        INSTANCIA. setPersistenceEnabled(true);
 
         recuperarUsuarios();
         user = FirebaseAuth.getInstance().getCurrentUser();
